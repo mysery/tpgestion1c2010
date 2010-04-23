@@ -11,7 +11,7 @@ namespace SolucionAlumno
     {
         public void func()
         {
-            new Node().Parent = new Node();
+            //new Node().Parent = new Node();
         }
     }
 }

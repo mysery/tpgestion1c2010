@@ -36,11 +36,6 @@ namespace SolucionAlumno
          */
         private int hValue;
 
-        /**
-		* Constructor por defecto
-		*/
-        public Node() { }
-
 		/**
 		* Constructor por con costo y punto
 		* @param costo del nodo creado.
@@ -63,32 +58,34 @@ namespace SolucionAlumno
 		/**
 		* Obtiene la lista de Nodos adyasentes en el mapa.
 		*/
-        public List<Node> getAdjacent(MapaDeCostos mapaDeCostos)
+        public List<Node> getAdjacent(MapaDeCostos mapaDeCostos, BinaryTree<Node> closeList)
         {
             //TODO OPTIMIZAR ESTA MIERDA!!!!! 12.34 ya no puedo pensar :P
             List<Node> listNodes = new List<Node>();
-            this.checkAdjacent(mapaDeCostos, this.Point.X, this.Point.Y - 1, listNodes);
-            this.checkAdjacent(mapaDeCostos, this.Point.X, this.Point.Y + 1, listNodes);
-            this.checkAdjacent(mapaDeCostos, this.Point.X + 1, this.Point.Y - 1, listNodes);
-            this.checkAdjacent(mapaDeCostos, this.Point.X + 1, this.Point.Y, listNodes);
-            this.checkAdjacent(mapaDeCostos, this.Point.X + 1, this.Point.Y + 1, listNodes);
-            this.checkAdjacent(mapaDeCostos, this.Point.X - 1, this.Point.Y - 1, listNodes);
-            this.checkAdjacent(mapaDeCostos, this.Point.X - 1, this.Point.Y, listNodes);
-            this.checkAdjacent(mapaDeCostos, this.Point.X - 1, this.Point.Y + 1, listNodes);
+            this.checkAdjacent(mapaDeCostos, this.Point.X, this.Point.Y - 1, closeList, listNodes);
+            this.checkAdjacent(mapaDeCostos, this.Point.X, this.Point.Y + 1, closeList, listNodes);
+            this.checkAdjacent(mapaDeCostos, this.Point.X + 1, this.Point.Y - 1, closeList, listNodes);
+            this.checkAdjacent(mapaDeCostos, this.Point.X + 1, this.Point.Y, closeList, listNodes);
+            this.checkAdjacent(mapaDeCostos, this.Point.X + 1, this.Point.Y + 1, closeList, listNodes);
+            this.checkAdjacent(mapaDeCostos, this.Point.X - 1, this.Point.Y - 1, closeList, listNodes);
+            this.checkAdjacent(mapaDeCostos, this.Point.X - 1, this.Point.Y, closeList, listNodes);
+            this.checkAdjacent(mapaDeCostos, this.Point.X - 1, this.Point.Y + 1, closeList, listNodes);
             return listNodes;
         }
 
         /**
          * Agrega un adjacente cuando corresponde a la lista de nodos.
          */
-        private void checkAdjacent(MapaDeCostos mapaDeCostos, int x, int y, List<Node> listNodes)
+        private void checkAdjacent(MapaDeCostos mapaDeCostos, int x, int y, BinaryTree<Node> closeList, List<Node> listNodes)
         {
             Point point = new Point(x, y);
-            if (mapaDeCostos.verificarPosicion(point))
+            Node node = new Node(mapaDeCostos.getCostoPosicion(point), point);
+            if (mapaDeCostos.verificarPosicion(node.Point) &&
+                closeList.Find(node) == null)
             {
                 //TODO A LA PIPETUA!!!
                 //mapaDeCostos.verificarZonaProhibida()
-                listNodes.Add(new Node(mapaDeCostos.getCostoPosicion(point), point));
+                listNodes.Add(node);
             }
         }
 
@@ -163,7 +160,11 @@ namespace SolucionAlumno
 		*/
         public override bool Equals(object obj)
         {
-            return this.point.Equals(obj);            
+            if (obj is Node)
+            {
+                return this.point.Equals(((Node) obj).Point);
+            }
+            return false;
         }
 
         /**
@@ -173,6 +174,15 @@ namespace SolucionAlumno
         {
             return this.point.GetHashCode();
         }
+
+        public override string ToString()
+        {
+            return this.Point.ToString();
+                
+            //return base.ToString();
+        }
+
+
     }
 }
 

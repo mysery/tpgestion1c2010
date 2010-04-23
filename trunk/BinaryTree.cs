@@ -95,9 +95,27 @@ namespace SolucionAlumno
             //SI NO TENES IDEA COMO LLEGO ACA???? JAJAJA COPY PASTE????
         }
 
+        /**
+         * Obtiene el minimo y ademas lo remueve de la lista.
+         */
+        public T getMinimoAndRemove()
+        {
+        if (this.raiz != null) {
+            BinaryTreeNode<T> node = this.raiz;
+            while (node.HasLeftChild) {
+                node = node.LeftChild;
+            }
+            this.Remove(node);
+            return node.Value;
+        }
+        return default(T); // no tengo idea que hace esto.
+        //SI NO TENES IDEA COMO LLEGO ACA???? JAJAJA COPY PASTE????
+        }
+
         public virtual BinaryTreeNode<T> Find(T value) {
             BinaryTreeNode<T> node = this.raiz;
             while (node != null) {
+                String values = node.Value + " - " + value;
                 if (node.Value.Equals(value)) {
                     return node;
                 } else {
@@ -122,9 +140,76 @@ namespace SolucionAlumno
             return this.Remove(node);
         }
 
+
+        //TODO ESTA MAL!!!!!
+        /**
+         * seudo....
+         * 
+         * def replace_node_in_parent(self, new_value=None):
+    '''
+    Removes the reference to *self* from *self.parent* and replaces it with *new_value*.
+    '''
+    if self == self.parent.left_child:
+        self.parent.left_child = new_value
+    else:
+        self.parent.right_child = new_value
+    if new_value:
+        new_value.parent = self.parent
+ 
+def binary_tree_delete(self, key):
+    if key < self.key:
+        self.left_child.binary_tree_delete(key)
+    elif key > self.key:
+        self.right_child.binary_tree_delete(key)
+    else: # delete the key here
+        if self.left_child and self.right_child: # if both children are present
+            # get the smallest node that's bigger than *self*
+            successor = self.right_child.findMin()
+            self.key = successor.key
+            # if *successor* has a child, replace it with that
+            # at this point, it can only have a *right_child*
+            # if it has no children, *right_child* will be "None"
+            successor.replace_node_in_parent(successor.right_child)
+        elif self.left_child or self.right_child:   # if the node has only one child
+            if self.left_child:
+                self.replace_node_in_parent(self.left_child)
+            else:
+                self.replace_node_in_parent(self.right_child)
+        else: # this node has no children
+            self.replace_node_in_parent(None)
+
+         * */ 
+        //seudo sakado de la wiki
         public virtual bool Remove(BinaryTreeNode<T> removeNode) {
-            // TODO
-            return false;
+            if (removeNode == null)
+                return false;
+            if (removeNode.Value.Equals(this.raiz.Value))
+            {
+                if (removeNode.IsTieneHijos)
+                {
+                    if (removeNode.HasLeftChild)
+                    {
+                        this.raiz = removeNode.LeftChild;
+                    }
+                    else
+                        this.raiz = removeNode.RightChild;
+                }
+                size--;
+                return true;
+            }
+
+            bool removeLeft = comparer((IComparable)removeNode.Value, (IComparable)removeNode.Parent.Value) <= 0;
+            //TODO cuando son iguales???? value== parent=value va a derecha o a izq?
+            if (removeLeft)
+            {
+                removeNode.Parent.LeftChild = null;
+                removeNode.Parent = null;
+            } else {
+                removeNode.Parent.LeftChild = null;
+                removeNode.Parent = null;                
+            }
+            size--;
+            return true;
         }
 
         public void Clear() {
@@ -157,3 +242,4 @@ namespace SolucionAlumno
 
     }
 }
+
