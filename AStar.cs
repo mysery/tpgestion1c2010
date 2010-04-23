@@ -34,14 +34,15 @@ namespace SolucionAlumno
 
             openList.Add(startNode);
             while(openList.Count > 0) {
-                Node actualNode = openList.getMinimo();
+                Node actualNode = openList.getMinimoAndRemove();
+                //openList.Remove(actualNode);
                 closeList.Add(actualNode);
                 
                 if(actualNode.Equals(goalNode)) {
                     return this.makeTheWay(startCheckpoint, goalCheckpoint, actualNode);
                 }
 
-                List<Node> adjacentNodes = actualNode.getAdjacent(mapaDeCostos);
+                List<Node> adjacentNodes = actualNode.getAdjacent(mapaDeCostos, closeList);
                 foreach(Node adjacent in adjacentNodes) {
                     if (!openList.Contains(adjacent)) {
                         // Entiendo que parent no como nodo padre 
@@ -57,8 +58,12 @@ namespace SolucionAlumno
                         if(nodo.GValue < adjacent.GValue) {
                             nodo.Parent = actualNode;
                             nodo.calculateCost(actualNode.Point, goalNode.Point);
-                            // TODO Reordenar la lista Abierta.
-                            //openList.REORDENAR
+                            if (!openList.Remove(nodo))
+                            {
+                                Logger.appendWarning("El nodo no fue removido con exito. " + nodo.Point);
+                            }
+                            openList.Add(nodo);
+                            // TODO NO HACE FALTA ORDENAR... SE SAKA Y SE PONE :P
                         }
                     }
                 }
