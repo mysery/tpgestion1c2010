@@ -63,6 +63,9 @@ namespace SolucionAlumno
                         size++;
                     } else {
                         node.Parent = node.Parent.LeftChild;
+                        //EJECUTO CON LOOP INFINOTO!!!!!
+                        //DESPUES VEO PORQUE :P 
+                        //Da loop porque no se remueven los nodos que entran al abierto ... falta implementar el remove :P ahi agrege funciones a implementar.
                         this.Add(node);
                     }
                 } else {
@@ -89,6 +92,7 @@ namespace SolucionAlumno
             }
             //return null;
             return default(T); // no tengo idea que hace esto.
+            //SI NO TENES IDEA COMO LLEGO ACA???? JAJAJA COPY PASTE????
         }
 
         public virtual BinaryTreeNode<T> Find(T value) {
@@ -131,6 +135,15 @@ namespace SolucionAlumno
             // TODO
         }
 
+        public virtual void reOrder()
+        {
+            //TODO
+        }
+
+        public virtual void balance()
+        {
+            //TODO
+        }
 
         public virtual IEnumerator<T> GetEnumerator() {
             return null;
