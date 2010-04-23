@@ -7,9 +7,10 @@ using System.Drawing;
 namespace SolucionAlumno
 {
     /**
-     * Clase que contiene la implementacion de A*
+     * Clase implementadora de A*
      */
-    class AStar {
+    class AStar : IAlgorithm
+    {
 
         private BinaryTree<Node> openList;
         private BinaryTree<Node> closeList;
@@ -19,15 +20,19 @@ namespace SolucionAlumno
             closeList = new BinaryTree<Node>();
         }
 
-        public Conexion buscarCamino(CheckPoint startCheckpoint, CheckPoint goalCheckpoint, MapaDeCostos mapaDeCostos)
+        /**
+         * Busca un camino entre startCheckpoint y goalCheckpoint teniendo en cuenta los costos del mapaDeCostos.
+         * Implementando el algoritmo A*
+         */
+        public Conexion pathFind(CheckPoint startCheckpoint, CheckPoint goalCheckpoint, MapaDeCostos mapaDeCostos)
         {
             // TODO ???? TODO QUE NEWBIE????
             Point start = startCheckpoint.Posicion;
             Point goal = goalCheckpoint.Posicion;
             Node startNode = new Node(mapaDeCostos.getCostoPosicion(start), start);
             Node goalNode = new Node(mapaDeCostos.getCostoPosicion(goal), goal);
+
             openList.Add(startNode);
-            
             while(openList.Count > 0) {
                 Node actualNode = openList.getMinimo();
                 closeList.Add(actualNode);
@@ -36,8 +41,7 @@ namespace SolucionAlumno
                     return this.makeTheWay(startCheckpoint, goalCheckpoint, actualNode);
                 }
 
-                // TODO Hacer el metodo getAdjacent
-                List<Node> adjacentNodes = new List<Node>();
+                List<Node> adjacentNodes = actualNode.getAdjacent(mapaDeCostos);
                 foreach(Node adjacent in adjacentNodes) {
                     if (!openList.Contains(adjacent)) {
                         // Entiendo que parent no como nodo padre 

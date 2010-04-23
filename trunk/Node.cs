@@ -54,8 +54,8 @@ namespace SolucionAlumno
 		/**
 		* Calcula el costo de movimiento para el Nodo
 		*/
-        public void calculateCost(Point nextPoint, Point goal) {
-            this.gValue = CostCalculator.Instance.move(this.Point, nextPoint);
+        public void calculateCost(Point previousPoint, Point goal) {
+            this.gValue = CostCalculator.Instance.move(previousPoint, this.Point);
             this.hValue = CostCalculator.Instance.aproximateMove(this.Point, goal);
             fValue = gValue + hValue;
         }
@@ -63,9 +63,33 @@ namespace SolucionAlumno
 		/**
 		* Obtiene la lista de Nodos adyasentes en el mapa.
 		*/
-        public List<Node> getAdyacentes(){
-        	//TODO Hacer el metodo
-            return null;
+        public List<Node> getAdjacent(MapaDeCostos mapaDeCostos)
+        {
+            //TODO OPTIMIZAR ESTA MIERDA!!!!! 12.34 ya no puedo pensar :P
+            List<Node> listNodes = new List<Node>();
+            this.checkAdjacent(mapaDeCostos, this.Point.X, this.Point.Y - 1, listNodes);
+            this.checkAdjacent(mapaDeCostos, this.Point.X, this.Point.Y + 1, listNodes);
+            this.checkAdjacent(mapaDeCostos, this.Point.X + 1, this.Point.Y - 1, listNodes);
+            this.checkAdjacent(mapaDeCostos, this.Point.X + 1, this.Point.Y, listNodes);
+            this.checkAdjacent(mapaDeCostos, this.Point.X + 1, this.Point.Y + 1, listNodes);
+            this.checkAdjacent(mapaDeCostos, this.Point.X - 1, this.Point.Y - 1, listNodes);
+            this.checkAdjacent(mapaDeCostos, this.Point.X - 1, this.Point.Y, listNodes);
+            this.checkAdjacent(mapaDeCostos, this.Point.X - 1, this.Point.Y + 1, listNodes);
+            return listNodes;
+        }
+
+        /**
+         * Agrega un adjacente cuando corresponde a la lista de nodos.
+         */
+        private void checkAdjacent(MapaDeCostos mapaDeCostos, int x, int y, List<Node> listNodes)
+        {
+            Point point = new Point(x, y);
+            if (mapaDeCostos.verificarPosicion(point))
+            {
+                //TODO A LA PIPETUA!!!
+                //mapaDeCostos.verificarZonaProhibida()
+                listNodes.Add(new Node(mapaDeCostos.getCostoPosicion(point), point));
+            }
         }
 
 		/**
