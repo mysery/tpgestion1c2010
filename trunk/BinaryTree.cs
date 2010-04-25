@@ -181,34 +181,80 @@ def binary_tree_delete(self, key):
          * */ 
         //seudo sakado de la wiki
         public virtual bool Remove(BinaryTreeNode<T> removeNode) {
-            if (removeNode == null)
+            if (removeNode == null) {
                 return false;
-            if (removeNode.Value.Equals(this.raiz.Value))
+            }
+            bool esRaiz = (removeNode == raiz);
+            if (this.Count == 1)
             {
-                if (removeNode.IsTieneHijos)
+                this.raiz = null;
+                size--;
+            }
+            //Remueve para el caso que no tenga hijos
+            else if (removeNode.IsHoja) 
+            {
+                if (removeNode.IsLeftChild)
                 {
-                    if (removeNode.HasLeftChild)
+                    removeNode.Parent.LeftChild = null;
+                }
+                else {
+                    removeNode.Parent.RightChild = null;
+                }
+                removeNode.Parent = null;
+                size--;
+            }
+            //Remueve para el caso que tenga un hijo
+            else if (removeNode.CantHijos == 1)
+            {
+                if (removeNode.HasLeftChild)
+                {
+                    removeNode.LeftChild.Parent = removeNode.Parent;
+                    if (esRaiz)
                     {
                         this.raiz = removeNode.LeftChild;
                     }
+                    if (removeNode.IsLeftChild)
+                    {
+                        removeNode.Parent.LeftChild = removeNode.LeftChild;
+                    }
                     else
-                        this.raiz = removeNode.RightChild;
-                }
-                size--;
-                return true;
-            }
+                    {
+                        removeNode.Parent.RightChild = removeNode.LeftChild;
 
-            bool removeLeft = comparer((IComparable)removeNode.Value, (IComparable)removeNode.Parent.Value) <= 0;
-            //TODO cuando son iguales???? value== parent=value va a derecha o a izq?
-            if (removeLeft)
-            {
-                removeNode.Parent.LeftChild = null;
+                    }
+                }
+                else
+                {
+                    removeNode.RightChild.Parent = removeNode.Parent;
+                    if (esRaiz)
+                    {
+                        this.raiz = removeNode.RightChild;
+                    }
+                    if (removeNode.IsLeftChild)
+                    {
+                        removeNode.Parent.LeftChild = removeNode.RightChild;
+                    }
+                    else
+                    {
+                        removeNode.Parent.RightChild = removeNode.RightChild;
+                    }
+                }
                 removeNode.Parent = null;
-            } else {
-                removeNode.Parent.LeftChild = null;
-                removeNode.Parent = null;                
+                removeNode.LeftChild = null;
+                removeNode.RightChild = null;
+                size--;
             }
-            size--;
+            //Remueve para el caso que tenga 2 hijos
+            else
+            {
+                BinaryTreeNode<T> successorNode = removeNode.LeftChild;
+                while (successorNode.RightChild != null)
+                {
+                    successorNode = successorNode.RightChild;
+                }
+                removeNode.Value = successorNode.Value;
+                this.Remove(successorNode);
+            }
             return true;
         }
 
