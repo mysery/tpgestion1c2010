@@ -79,13 +79,16 @@ namespace SolucionAlumno
         private void checkAdjacent(MapaDeCostos mapaDeCostos, int x, int y, BinaryTree<Node> closeList, List<Node> listNodes)
         {
             Point point = new Point(x, y);
-            Node node = new Node(mapaDeCostos.getCostoPosicion(point), point);
-            if (mapaDeCostos.verificarPosicion(node.Point) &&
-                closeList.Find(node) == null)
+            if (mapaDeCostos.verificarPosicion(point))
             {
-                //TODO A LA PIPETUA!!!
-                //mapaDeCostos.verificarZonaProhibida()
-                listNodes.Add(node);
+                Node node = new Node(mapaDeCostos.getCostoPosicion(point), point);
+                if (node.Costo.esTransitable() &&
+                    closeList.Find(node) == null)
+                {
+                    //TODO A LA PIPETUA!!!
+                    //mapaDeCostos.verificarZonaProhibida()
+                    listNodes.Add(node);
+                }
             }
         }
 
