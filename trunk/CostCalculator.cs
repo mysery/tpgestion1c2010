@@ -50,15 +50,19 @@ namespace SolucionAlumno
 		/**
 		*	Calcula el costo de movimiento.
 		*/
-        public int move(Point actual, Point next, MapaDeCostos mapaDeCostos)
+        public int move(Node previousNode, Node actual, MapaDeCostos mapaDeCostos)
         {
-            totalCostSumed += (int)Math.Truncate(100 * mapaDeCostos.getCostoPosicion(next).Valor);
+            totalCostSumed += (int)Math.Truncate(100 * actual.Costo.Valor);
             totalCostCounted++;
-            if (actual.X == next.X || actual.Y == next.Y)
+            if (previousNode.Point.X == actual.Point.X || previousNode.Point.Y == actual.Point.Y)
             {
-                return RECT +(int)Math.Truncate(100 * mapaDeCostos.getCostoPosicion(next).Valor);
+                return  RECT +
+                        previousNode .GValue +
+                        (int)Math.Truncate(100 * actual.Costo.Valor);
             }
-            return DIAGONAL +(int)Math.Truncate(100 * mapaDeCostos.getCostoPosicion(next).Valor);
+            return  DIAGONAL +
+                    previousNode.GValue +
+                    (int)Math.Truncate(100 * actual.Costo.Valor);
         }
         
 		/**
