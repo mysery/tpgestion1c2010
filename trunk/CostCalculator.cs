@@ -60,7 +60,7 @@ namespace SolucionAlumno
 		*/
         public int aproximateMove(Point actual, Point goal)
         {
-            return (int) Math.Round(100 * Math.Sqrt(((actual.X - goal.X) ^ 2 + (actual.Y - goal.Y) ^ 2)), 0);
+            return (int)Math.Truncate(100 * Math.Sqrt((Math.Pow((actual.X - goal.X),2) + Math.Pow((actual.Y - goal.Y),2))));
         }
 
     }

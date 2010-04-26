@@ -111,20 +111,64 @@ namespace SolucionAlumno
         return default(T); // no tengo idea que hace esto.
         //SI NO TENES IDEA COMO LLEGO ACA???? JAJAJA COPY PASTE????
         }
-
+        
+        /// <summary>
+        /// Busca un nodo.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public virtual BinaryTreeNode<T> Find(T value) {
+/*
             BinaryTreeNode<T> node = this.raiz;
-            while (node != null) {
+            while (node != null)
+            {
                 String values = node.Value + " - " + value;
-                if (node.Value.Equals(value)) {
+                if (node.Value.Equals(value))
+                {
                     return node;
-                } else {
+                }
+                else
+                {
                     bool searchLeft = comparer((IComparable)value, (IComparable)node.Value) < 0;
-                    if (searchLeft) {
+                    if (searchLeft)
+                    {
                         node = node.LeftChild;
-                    } else {
+                    }
+                    else
+                    {
                         node = node.RightChild;
                     }
+                }
+            }
+            return null;
+*/
+            return this.Find(value, this.raiz);
+        }
+
+        /// <summary>
+        /// Busqueda secuencial sobre todo el arbol!!!!
+        /// //TODO PERFORMAR
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        public virtual BinaryTreeNode<T> Find(T value, BinaryTreeNode<T> node)
+        {
+            if (node != null)
+            {
+                if (node.Value.Equals(value))
+                {
+                    return node;
+                }
+                BinaryTreeNode<T> nodeLeftChilds = this.Find(value, node.LeftChild);
+                if (nodeLeftChilds != null)
+                {
+                    return nodeLeftChilds;
+                }
+                BinaryTreeNode<T> nodeRigthChilds = this.Find(value, node.RightChild);
+                if (nodeRigthChilds != null)
+                {
+                    return nodeRigthChilds;
                 }
             }
             return null;
@@ -141,45 +185,11 @@ namespace SolucionAlumno
         }
 
 
-        //TODO ESTA MAL!!!!!
-        /**
-         * seudo....
-         * 
-         * def replace_node_in_parent(self, new_value=None):
-    '''
-    Removes the reference to *self* from *self.parent* and replaces it with *new_value*.
-    '''
-    if self == self.parent.left_child:
-        self.parent.left_child = new_value
-    else:
-        self.parent.right_child = new_value
-    if new_value:
-        new_value.parent = self.parent
- 
-def binary_tree_delete(self, key):
-    if key < self.key:
-        self.left_child.binary_tree_delete(key)
-    elif key > self.key:
-        self.right_child.binary_tree_delete(key)
-    else: # delete the key here
-        if self.left_child and self.right_child: # if both children are present
-            # get the smallest node that's bigger than *self*
-            successor = self.right_child.findMin()
-            self.key = successor.key
-            # if *successor* has a child, replace it with that
-            # at this point, it can only have a *right_child*
-            # if it has no children, *right_child* will be "None"
-            successor.replace_node_in_parent(successor.right_child)
-        elif self.left_child or self.right_child:   # if the node has only one child
-            if self.left_child:
-                self.replace_node_in_parent(self.left_child)
-            else:
-                self.replace_node_in_parent(self.right_child)
-        else: # this node has no children
-            self.replace_node_in_parent(None)
-
-         * */ 
-        //seudo sakado de la wiki
+        /// <summary>
+        /// Remueve un nodo.
+        /// </summary>
+        /// <param name="removeNode">Nodo a remover.</param>
+        /// <returns></returns>
         public virtual bool Remove(BinaryTreeNode<T> removeNode) {
             if (removeNode == null) {
                 return false;
@@ -213,14 +223,17 @@ def binary_tree_delete(self, key):
                     {
                         this.raiz = removeNode.LeftChild;
                     }
-                    if (removeNode.IsLeftChild)
-                    {
-                        removeNode.Parent.LeftChild = removeNode.LeftChild;
-                    }
                     else
                     {
-                        removeNode.Parent.RightChild = removeNode.LeftChild;
 
+                        if (removeNode.IsLeftChild)
+                        {
+                            removeNode.Parent.LeftChild = removeNode.LeftChild;
+                        }
+                        else
+                        {
+                            removeNode.Parent.RightChild = removeNode.LeftChild;
+                        }
                     }
                 }
                 else
@@ -230,13 +243,16 @@ def binary_tree_delete(self, key):
                     {
                         this.raiz = removeNode.RightChild;
                     }
-                    if (removeNode.IsLeftChild)
-                    {
-                        removeNode.Parent.LeftChild = removeNode.RightChild;
-                    }
                     else
                     {
-                        removeNode.Parent.RightChild = removeNode.RightChild;
+                        if (removeNode.IsLeftChild)
+                        {
+                            removeNode.Parent.LeftChild = removeNode.RightChild;
+                        }
+                        else
+                        {
+                            removeNode.Parent.RightChild = removeNode.RightChild;
+                        }
                     }
                 }
                 removeNode.Parent = null;
@@ -264,11 +280,6 @@ def binary_tree_delete(self, key):
 
         public virtual void CopyTo(T[] array, int startIndex) {
             // TODO
-        }
-
-        public virtual void reOrder()
-        {
-            //TODO
         }
 
         public virtual void balance()
