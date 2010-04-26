@@ -5,27 +5,12 @@ using System.Collections;
 
 namespace SolucionAlumno
 {
-    class BinaryTree<T> : ICollection<T> where T : IComparable {
+    class BinaryTree<T> : IOrderSerchStruct<T> where T : IComparable {
 
         private BinaryTreeNode<T> raiz;
+        //private Hashtable hashTable = new Hashtable();
         private Comparison<IComparable> comparer = CompareElements;
         private int size;
-
-        public virtual BinaryTreeNode<T> Raiz
-        {
-            get { return raiz; }
-            set { raiz = value; }
-        }
-
-        public virtual bool IsReadOnly
-        {
-            get { return false; }
-        }
-
-        public virtual int Count
-        {
-            get { return size; }
-        }
 
         public BinaryTree()
         {
@@ -33,13 +18,28 @@ namespace SolucionAlumno
             size = 0;
         }
 
+        public int Size
+        {
+            get { return size; }
+        }
+
+        public BinaryTreeNode<T> Raiz
+        {
+            get { return raiz; }
+            set { raiz = value; }
+        }
+
         public static int CompareElements(IComparable valor1, IComparable valor2) {
             return valor1.CompareTo(valor2);
         }
-
-        public virtual void Add(T value) {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        public void Add(T value) {
             BinaryTreeNode<T> node = new BinaryTreeNode<T>(value);
             this.Add(node);
+            //hashTable.Add(value.GetHashCode(), node);
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace SolucionAlumno
         /// menor a la raiz, lo coloca a la izquierda, sino a la derecha.
         /// </summary>
         /// <param name="node"></param>
-        public virtual void Add(BinaryTreeNode<T> node) {
+        public void Add(BinaryTreeNode<T> node) {
             if (this.raiz == null) {
                 this.raiz = node;
                 size++;
@@ -63,9 +63,6 @@ namespace SolucionAlumno
                         size++;
                     } else {
                         node.Parent = node.Parent.LeftChild;
-                        //EJECUTO CON LOOP INFINOTO!!!!!
-                        //DESPUES VEO PORQUE :P 
-                        //Da loop porque no se remueven los nodos que entran al abierto ... falta implementar el remove :P ahi agrege funciones a implementar.
                         this.Add(node);
                     }
                 } else {
@@ -82,7 +79,7 @@ namespace SolucionAlumno
 
         //TODO juli - Vieja este metodo tambien va a sacar el nodo?
         //Te acordas que deciamos que lo obtiene y lo saca del arbol.
-        public T getMinimo() {
+        public T getMinValue() {
             if (this.raiz != null) {
                 BinaryTreeNode<T> node = this.raiz;
                 while (node.HasLeftChild) {
@@ -117,7 +114,7 @@ namespace SolucionAlumno
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual BinaryTreeNode<T> Find(T value) {
+        public BinaryTreeNode<T> Find(T value) {
 /*
             BinaryTreeNode<T> node = this.raiz;
             while (node != null)
@@ -142,6 +139,7 @@ namespace SolucionAlumno
             }
             return null;
 */
+            //return hashTable[value.GetHashCode()] as BinaryTreeNode<T>;
             return this.Find(value, this.raiz);
         }
 
@@ -152,7 +150,7 @@ namespace SolucionAlumno
         /// <param name="value"></param>
         /// <param name="node"></param>
         /// <returns></returns>
-        public virtual BinaryTreeNode<T> Find(T value, BinaryTreeNode<T> node)
+        public BinaryTreeNode<T> Find(T value, BinaryTreeNode<T> node)
         {
             if (node != null)
             {
@@ -174,30 +172,30 @@ namespace SolucionAlumno
             return null;
         }
 
-        public virtual bool Contains(T value) {
+        public bool Contains(T value) {
+            //return hashTable.ContainsKey(value.GetHashCode());
             return (this.Find(value) != null);
         }
 
-
-        public virtual bool Remove(T value) {
+        public bool Remove(T value) {
             BinaryTreeNode<T> node = Find(value);
             return this.Remove(node);
         }
-
 
         /// <summary>
         /// Remueve un nodo.
         /// </summary>
         /// <param name="removeNode">Nodo a remover.</param>
         /// <returns></returns>
-        public virtual bool Remove(BinaryTreeNode<T> removeNode) {
+        public bool Remove(BinaryTreeNode<T> removeNode) {
             if (removeNode == null) {
                 return false;
             }
             bool esRaiz = (removeNode == raiz);
-            if (this.Count == 1)
+            if (this.Size == 1)
             {
                 this.raiz = null;
+                //hashTable.Remove(removeNode.Value.GetHashCode());
                 size--;
             }
             //Remueve para el caso que no tenga hijos
@@ -211,6 +209,7 @@ namespace SolucionAlumno
                     removeNode.Parent.RightChild = null;
                 }
                 removeNode.Parent = null;
+                //hashTable.Remove(removeNode.Value.GetHashCode());
                 size--;
             }
             //Remueve para el caso que tenga un hijo
@@ -258,6 +257,7 @@ namespace SolucionAlumno
                 removeNode.Parent = null;
                 removeNode.LeftChild = null;
                 removeNode.RightChild = null;
+                //hashTable.Remove(removeNode.Value.GetHashCode());
                 size--;
             }
             //Remueve para el caso que tenga 2 hijos
@@ -277,26 +277,6 @@ namespace SolucionAlumno
         public void Clear() {
             // TODO
         }
-
-        public virtual void CopyTo(T[] array, int startIndex) {
-            // TODO
-        }
-
-        public virtual void balance()
-        {
-            //TODO
-        }
-
-        public virtual IEnumerator<T> GetEnumerator() {
-            return null;
-        }
-
-        
-        IEnumerator IEnumerable.GetEnumerator() {
-            return null;
-        }
-
-
     }
 }
 
