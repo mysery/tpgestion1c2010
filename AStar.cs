@@ -51,14 +51,14 @@ namespace SolucionAlumno
                         //UF QUE MAL REDACTAS PAPA!!!! y si ya lo tenia entendido :P
                         adjacent.Parent = actualNode;
                         //NextNode se entiende como el nodo de donde venis quizas esta mal el nombre en el metodo.
-                        adjacent.calculateCost(actualNode.Point, goalNode.Point, mapaDeCostos);
+                        adjacent.calculateCost(actualNode, goalNode.Point, mapaDeCostos);
                         // Lo muevo aca porque si se agrega antes de calcular los costos se agrega mal.
                         openList.Add(adjacent);
                     } else { 
                         Node nodo = openList.Find(adjacent).Value;
                         if(nodo.GValue < adjacent.GValue) {
                             nodo.Parent = actualNode;
-                            nodo.calculateCost(actualNode.Point, goalNode.Point, mapaDeCostos);
+                            nodo.calculateCost(actualNode, goalNode.Point, mapaDeCostos);
                             //NO HACE FALTA ORDENAR... SE SAKA Y SE PONE ORDENADO
                             if (!openList.Remove(nodo))
                             {
