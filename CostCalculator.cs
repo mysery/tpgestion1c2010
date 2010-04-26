@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using BibliotecaComun;
 
 namespace SolucionAlumno
 {
@@ -18,6 +19,9 @@ namespace SolucionAlumno
 		*	Constante con el costo de moviento diagonal, multiplicado por 100 y truncado para no manerjar puntos flotantes. 
 		*/
         private const int DIAGONAL = 282;
+        
+        private int totalCostCounted = 0;
+        private int totalCostSumed = 0;
 
 		/**
 		*	Instancia del singleton CostCalculator.
@@ -46,13 +50,15 @@ namespace SolucionAlumno
 		/**
 		*	Calcula el costo de movimiento.
 		*/
-        public int move(Point actual, Point next)
+        public int move(Point actual, Point next, MapaDeCostos mapaDeCostos)
         {
+            totalCostSumed += (int)Math.Truncate(100 * mapaDeCostos.getCostoPosicion(next).Valor);
+            totalCostCounted++;
             if (actual.X == next.X || actual.Y == next.Y)
             {
-                return RECT;
+                return RECT +(int)Math.Truncate(100 * mapaDeCostos.getCostoPosicion(next).Valor);
             }
-            return DIAGONAL;
+            return DIAGONAL +(int)Math.Truncate(100 * mapaDeCostos.getCostoPosicion(next).Valor);
         }
         
 		/**
@@ -60,7 +66,10 @@ namespace SolucionAlumno
 		*/
         public int aproximateMove(Point actual, Point goal)
         {
-            return (int)Math.Truncate(100 * Math.Sqrt((Math.Pow((actual.X - goal.X),2) + Math.Pow((actual.Y - goal.Y),2))));
+            int value = 0;
+            value += (int)Math.Truncate(100 * Math.Sqrt((Math.Pow((actual.X - goal.X), 2) + Math.Pow((actual.Y - goal.Y), 2))));
+            value += totalCostSumed / totalCostCounted;
+            return value;
         }
 
     }
