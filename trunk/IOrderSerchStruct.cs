@@ -10,9 +10,11 @@ namespace SolucionAlumno
         void Add(T item);
         void Clear();
         bool Contains(T item);
+        T FindInStruct(T item);
         bool Remove(T item);
         T getMinValue();
         T getMinimoAndRemove();
 
     }
 }
+

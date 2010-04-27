@@ -108,7 +108,12 @@ namespace SolucionAlumno
         return default(T); // no tengo idea que hace esto.
         //SI NO TENES IDEA COMO LLEGO ACA???? JAJAJA COPY PASTE????
         }
-        
+
+        public T FindInStruct(T value)
+        {
+            return Find(value).Value;
+        }
+
         /// <summary>
         /// Busca un nodo.
         /// </summary>
@@ -275,8 +280,13 @@ namespace SolucionAlumno
         }
 
         public void Clear() {
-            // TODO
+            if (this.raiz != null)
+            {
+                this.raiz.LeftChild = null;
+                this.raiz.RightChild = null;
+            }
+            this.raiz = null;
+            this.size = 0;
         }
     }
 }
-

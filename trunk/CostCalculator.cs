@@ -57,7 +57,7 @@ namespace SolucionAlumno
             if (previousNode.Point.X == actual.Point.X || previousNode.Point.Y == actual.Point.Y)
             {
                 return  RECT +
-                        previousNode .GValue +
+                        previousNode.GValue +
                         (int)Math.Truncate(100 * actual.Costo.Valor);
             }
             return  DIAGONAL +
@@ -71,7 +71,10 @@ namespace SolucionAlumno
         public int aproximateMove(Point actual, Point goal)
         {
             int value = 0;
-            value += (int)Math.Truncate(100 * Math.Sqrt((Math.Pow((actual.X - goal.X), 2) + Math.Pow((actual.Y - goal.Y), 2))));
+            //int diagonal = Math.Min(Math.Abs(actual.X - goal.X), Math.Abs(actual.Y - goal.Y));
+            //int direct = Math.Abs(actual.X - goal.X) + Math.Abs(actual.Y - goal.Y);
+            //value += DIAGONAL * diagonal + RECT * (RECT - 2 * diagonal);
+            value += (int)Math.Truncate(RECT * Math.Sqrt((Math.Pow((actual.X - goal.X), 2) + Math.Pow((actual.Y - goal.Y), 2))));
             value += totalCostSumed / totalCostCounted;
             return value;
         }

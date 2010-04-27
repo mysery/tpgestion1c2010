@@ -11,13 +11,13 @@ namespace SolucionAlumno
      */
     class AStar : IAlgorithm
     {
-        private BinaryTree<Node> openList;
-        private BinaryTree<Node> closeList;
-        
-        public AStar()
+        private IOrderSerchStruct<Node> openStruct;
+        private IOrderSerchStruct<Node> closeStruct;
+
+        public AStar(IOrderSerchStruct<Node> pOpenStruct, IOrderSerchStruct<Node> pCloseStruct)
         {
-            openList = new BinaryTree<Node>();
-            closeList = new BinaryTree<Node>();
+            this.openStruct = pOpenStruct;
+            this.closeStruct = pCloseStruct;
         }
 
         /**
@@ -26,25 +26,28 @@ namespace SolucionAlumno
          */
         public Conexion pathFind(CheckPoint startCheckpoint, CheckPoint goalCheckpoint, MapaDeCostos mapaDeCostos)
         {
-            // TODO ???? TODO QUE NEWBIE????
+            //Se limpian las estructuras.
+            openStruct.Clear();
+            closeStruct.Clear();
+            
             Point start = startCheckpoint.Posicion;
             Point goal = goalCheckpoint.Posicion;
             Node startNode = new Node(mapaDeCostos.getCostoPosicion(start), start);
             Node goalNode = new Node(mapaDeCostos.getCostoPosicion(goal), goal);
 
-            openList.Add(startNode);
-            while(openList.Size > 0) {
-                Node actualNode = openList.getMinimoAndRemove();
+            openStruct.Add(startNode);
+            while(openStruct.Size > 0) {
+                Node actualNode = openStruct.getMinimoAndRemove();
                 //openList.Remove(actualNode);
-                closeList.Add(actualNode);
+                closeStruct.Add(actualNode);
                 
                 if(actualNode.Equals(goalNode)) {
                     return this.makeTheWay(startCheckpoint, goalCheckpoint, actualNode);
                 }
 
-                List<Node> adjacentNodes = actualNode.getAdjacent(mapaDeCostos, closeList);
+                List<Node> adjacentNodes = actualNode.getAdjacent(mapaDeCostos, closeStruct);
                 foreach(Node adjacent in adjacentNodes) {
-                    if (!openList.Contains(adjacent))
+                    if (!openStruct.Contains(adjacent))
                     {
                         // Entiendo que parent no como nodo padre 
                         // del arbol sino como nodo del que viene, cachai
@@ -53,18 +56,18 @@ namespace SolucionAlumno
                         //NextNode se entiende como el nodo de donde venis quizas esta mal el nombre en el metodo.
                         adjacent.calculateCost(actualNode, goalNode.Point, mapaDeCostos);
                         // Lo muevo aca porque si se agrega antes de calcular los costos se agrega mal.
-                        openList.Add(adjacent);
+                        openStruct.Add(adjacent);
                     } else { 
-                        Node nodo = openList.Find(adjacent).Value;
+                        Node nodo = openStruct.FindInStruct(adjacent);
                         if(nodo.GValue < adjacent.GValue) {
                             nodo.Parent = actualNode;
                             nodo.calculateCost(actualNode, goalNode.Point, mapaDeCostos);
                             //NO HACE FALTA ORDENAR... SE SAKA Y SE PONE ORDENADO
-                            if (!openList.Remove(nodo))
+                            if (!openStruct.Remove(nodo))
                             {
                                 Logger.appendWarning("El nodo no fue removido con exito. " + nodo.Point);
                             }
-                            openList.Add(nodo);
+                            openStruct.Add(nodo);
                         }
                     }
                 }
