@@ -58,7 +58,7 @@ namespace SolucionAlumno
 		/**
 		* Obtiene la lista de Nodos adyasentes en el mapa.
 		*/
-        public List<Node> getAdjacent(MapaDeCostos mapaDeCostos, BinaryTree<Node> closeList)
+        public List<Node> getAdjacent(MapaDeCostos mapaDeCostos, IOrderSerchStruct<Node> closeList)
         {
             //TODO OPTIMIZAR ESTA MIERDA!!!!! 12.34 ya no puedo pensar :P
             List<Node> listNodes = new List<Node>();
@@ -76,14 +76,14 @@ namespace SolucionAlumno
         /**
          * Agrega un adjacente cuando corresponde a la lista de nodos.
          */
-        private void checkAdjacent(MapaDeCostos mapaDeCostos, int x, int y, BinaryTree<Node> closeList, List<Node> listNodes)
+        private void checkAdjacent(MapaDeCostos mapaDeCostos, int x, int y, IOrderSerchStruct<Node> closeList, List<Node> listNodes)
         {
             Point point = new Point(x, y);
             if (mapaDeCostos.verificarPosicion(point))
             {
                 Node node = new Node(mapaDeCostos.getCostoPosicion(point), point);
                 if (node.Costo.esTransitable() &&
-                    closeList.Find(node) == null)
+                    !closeList.Contains(node))
                 {
                     //TODO A LA PIPETUA!!!
                     //mapaDeCostos.verificarZonaProhibida()
@@ -175,7 +175,7 @@ namespace SolucionAlumno
 		*/
         public override int GetHashCode()
         {
-            return this.point.GetHashCode();
+            return this.point.X * 1000 + this.point.Y;
         }
 
         public override string ToString()
