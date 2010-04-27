@@ -47,27 +47,28 @@ namespace SolucionAlumno
 
                 List<Node> adjacentNodes = actualNode.getAdjacent(mapaDeCostos, closeStruct);
                 foreach(Node adjacent in adjacentNodes) {
+                    //NextNode se entiende como el nodo de donde venis quizas esta mal el nombre en el metodo.
+                    adjacent.calculateCost(actualNode, goalNode.Point, mapaDeCostos);
                     if (!openStruct.Contains(adjacent))
                     {
                         // Entiendo que parent no como nodo padre 
                         // del arbol sino como nodo del que viene, cachai
                         //UF QUE MAL REDACTAS PAPA!!!! y si ya lo tenia entendido :P
-                        adjacent.Parent = actualNode;
-                        //NextNode se entiende como el nodo de donde venis quizas esta mal el nombre en el metodo.
-                        adjacent.calculateCost(actualNode, goalNode.Point, mapaDeCostos);
+                        adjacent.Parent = actualNode;                       
                         // Lo muevo aca porque si se agrega antes de calcular los costos se agrega mal.
                         openStruct.Add(adjacent);
                     } else { 
-                        Node nodo = openStruct.FindInStruct(adjacent);
-                        if(nodo.GValue < adjacent.GValue) {
-                            nodo.Parent = actualNode;
-                            nodo.calculateCost(actualNode, goalNode.Point, mapaDeCostos);
+                        Node nodo = openStruct.FindInStruct(adjacent);                        
+                        if (adjacent.GValue < nodo.GValue)
+                        {
+                            adjacent.Parent = actualNode;
+                            //nodo.calculateCost(actualNode, goalNode.Point, mapaDeCostos);
                             //NO HACE FALTA ORDENAR... SE SAKA Y SE PONE ORDENADO
                             if (!openStruct.Remove(nodo))
                             {
                                 Logger.appendWarning("El nodo no fue removido con exito. " + nodo.Point);
                             }
-                            openStruct.Add(nodo);
+                            openStruct.Add(adjacent);
                         }
                     }
                 }
