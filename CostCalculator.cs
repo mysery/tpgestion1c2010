@@ -52,17 +52,18 @@ namespace SolucionAlumno
 		*/
         public int move(Node previousNode, Node actual, MapaDeCostos mapaDeCostos)
         {
-            totalCostSumed += (int)Math.Truncate(100 * actual.Costo.Valor);
-            totalCostCounted++;
+            int precalculed = previousNode.GValue + (int)Math.Truncate(100 * actual.Costo.Valor);
             if (previousNode.Point.X == actual.Point.X || previousNode.Point.Y == actual.Point.Y)
             {
-                return  RECT +
-                        previousNode.GValue +
-                        (int)Math.Truncate(100 * actual.Costo.Valor);
+                precalculed += RECT;
+            } 
+            else
+            {
+                precalculed += DIAGONAL;
             }
-            return  DIAGONAL +
-                    previousNode.GValue +
-                    (int)Math.Truncate(100 * actual.Costo.Valor);
+            totalCostSumed += precalculed;
+            totalCostCounted++;
+            return precalculed;
         }
         
 		/**
@@ -71,10 +72,10 @@ namespace SolucionAlumno
         public int aproximateMove(Point actual, Point goal)
         {
             int value = 0;
-            //int diagonal = Math.Min(Math.Abs(actual.X - goal.X), Math.Abs(actual.Y - goal.Y));
-            //int direct = Math.Abs(actual.X - goal.X) + Math.Abs(actual.Y - goal.Y);
-            //value += DIAGONAL * diagonal + RECT * (RECT - 2 * diagonal);
-            value += (int)Math.Truncate(RECT * Math.Sqrt((Math.Pow((actual.X - goal.X), 2) + Math.Pow((actual.Y - goal.Y), 2))));
+            int diagonal = Math.Min(Math.Abs(actual.X - goal.X), Math.Abs(actual.Y - goal.Y));
+            int direct = Math.Abs(actual.X - goal.X) + Math.Abs(actual.Y - goal.Y);
+            value += DIAGONAL * diagonal + RECT * (direct - 2 * diagonal);
+            //value += (int)Math.Truncate(RECT * Math.Sqrt((Math.Pow((actual.X - goal.X), 2) + Math.Pow((actual.Y - goal.Y), 2))));
             value += totalCostSumed / totalCostCounted;
             return value;
         }
