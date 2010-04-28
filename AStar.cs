@@ -24,7 +24,7 @@ namespace SolucionAlumno
          * Busca un camino entre startCheckpoint y goalCheckpoint teniendo en cuenta los costos del mapaDeCostos.
          * Implementando el algoritmo A*
          */
-        public Conexion pathFind(CheckPoint startCheckpoint, CheckPoint goalCheckpoint, MapaDeCostos mapaDeCostos)
+        public Conexion pathFind(CheckPoint startCheckpoint, CheckPoint goalCheckpoint, MapaDeCostos mapaDeCostos, List<ZonaProhibida> zonasProhibidas)
         {
             //Se limpian las estructuras.
             openStruct.Clear();
@@ -45,7 +45,7 @@ namespace SolucionAlumno
                     return this.makeTheWay(startCheckpoint, goalCheckpoint, actualNode);
                 }
 
-                List<Node> adjacentNodes = actualNode.getAdjacent(mapaDeCostos, closeStruct);
+                List<Node> adjacentNodes = actualNode.getAdjacent(mapaDeCostos, closeStruct, zonasProhibidas);
                 foreach(Node adjacent in adjacentNodes) {
                     //NextNode se entiende como el nodo de donde venis quizas esta mal el nombre en el metodo.
                     adjacent.calculateCost(actualNode, goalNode.Point, mapaDeCostos);

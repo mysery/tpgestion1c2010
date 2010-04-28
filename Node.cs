@@ -58,8 +58,44 @@ namespace SolucionAlumno
 		/**
 		* Obtiene la lista de Nodos adyasentes en el mapa.
 		*/
-        public List<Node> getAdjacent(MapaDeCostos mapaDeCostos, IOrderSerchStruct<Node> closeList)
+        public List<Node> getAdjacent(MapaDeCostos mapaDeCostos, IOrderSerchStruct<Node> closeList, List<ZonaProhibida> zonasProhibidas)
         {
+            List<Node> nodosAdyacentes = new List<Node>();
+
+            for (int x = this.Point.X - 1; x <= this.Point.X + 1; x++)
+            {
+                for (int y = this.Point.Y - 1; y <= this.Point.Y + 1; y++)
+                {
+                    if (!((x == this.Point.X) && (y == this.Point.Y)))
+                    {
+                        Point point = new Point();
+                        point.X = x;
+                        point.Y = y;
+                        bool b = false;
+                        if (mapaDeCostos.verificarPosicion(point))
+                        {
+                            Node nodoAdyacente = new Node(mapaDeCostos.getCostoPosicion(point), point);
+                            if (nodoAdyacente.Costo.esTransitable() &&
+                                !closeList.Contains(nodoAdyacente))
+                            {
+                                foreach (ZonaProhibida zonaProhibida in zonasProhibidas)
+                                {
+
+                                    b = b || mapaDeCostos.verificarZonaProhibida(point, zonaProhibida);
+                                    if (b)
+                                        break;
+                                }
+                                if (!b)
+                                {
+                                    nodosAdyacentes.Add(nodoAdyacente);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return nodosAdyacentes;
+            /*
             //TODO OPTIMIZAR ESTA MIERDA!!!!! 12.34 ya no puedo pensar :P
             List<Node> listNodes = new List<Node>();
             this.checkAdjacent(mapaDeCostos, this.Point.X, this.Point.Y - 1, closeList, listNodes);
@@ -70,7 +106,7 @@ namespace SolucionAlumno
             this.checkAdjacent(mapaDeCostos, this.Point.X - 1, this.Point.Y - 1, closeList, listNodes);
             this.checkAdjacent(mapaDeCostos, this.Point.X - 1, this.Point.Y, closeList, listNodes);
             this.checkAdjacent(mapaDeCostos, this.Point.X - 1, this.Point.Y + 1, closeList, listNodes);
-            return listNodes;
+            return listNodes;*/
         }
 
         /**

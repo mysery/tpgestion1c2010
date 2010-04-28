@@ -10,6 +10,6 @@ namespace SolucionAlumno
         /**
          * Busca un camino entre startCheckpoint y goalCheckpoint teniendo en cuenta los costos del mapaDeCostos.
          */
-        Conexion pathFind(CheckPoint startCheckpoint, CheckPoint goalCheckpoint, MapaDeCostos mapaDeCostos);
+        Conexion pathFind(CheckPoint startCheckpoint, CheckPoint goalCheckpoint, MapaDeCostos mapaDeCostos, List<ZonaProhibida> zonasProhibidas);
     }
 }
