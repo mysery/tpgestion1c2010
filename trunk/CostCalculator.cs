@@ -52,19 +52,20 @@ namespace SolucionAlumno
 		*/
         public int move(Node previousNode, Node actual, MapaDeCostos mapaDeCostos)
         {
-            double costToFix = actual.Costo.Valor;//(int)Math.Truncate(1000 * actual.Costo.Valor);
+            double costToFix = actual.Costo.Valor;
+            //Guardo un conteo de costos para poder realizar una estadistica.
             totalCostSumed += costToFix;
             totalCostCounted++;
-            int precalculed = previousNode.GValue;// +costToFix;
+            int precalculed = previousNode.GValue;
             if (previousNode.Point.X == actual.Point.X || previousNode.Point.Y == actual.Point.Y)
             {
-                precalculed += RECT + (int)Math.Truncate(100 * costToFix);
+                precalculed += (int)Math.Truncate((RECT - 275 * costToFix) + RECT);
             } 
             else
             {
-                precalculed += DIAGONAL + (int)Math.Truncate(100 * costToFix);
+                precalculed += (int)Math.Truncate((DIAGONAL - 275 * costToFix) + DIAGONAL);
             }
-            return precalculed;
+            return Math.Abs(precalculed);
         }
         
 		/**
@@ -73,20 +74,21 @@ namespace SolucionAlumno
         public int aproximateMove(Point actual, Point goal)
         {
             int value = 0;
-            int rectAproxCost = RECT + this.getAproximateCostTerain(); // + (int)Math.Truncate(RECT * totalCostSumed / totalCostCounted);
-            int diagonalAproxCost = DIAGONAL + this.getAproximateCostTerain(); // (int)Math.Truncate(DIAGONAL * totalCostSumed / totalCostCounted);
+            //return 0;
+            int rectAproxCost = RECT; //this.getAproximateCostTerain(RECT);
+            int diagonalAproxCost = DIAGONAL; //this.getAproximateCostTerain(DIAGONAL);
             int diagonal = Math.Min(Math.Abs(actual.X - goal.X), Math.Abs(actual.Y - goal.Y));
             int direct = Math.Abs(actual.X - goal.X) + Math.Abs(actual.Y - goal.Y);
             value += diagonalAproxCost * diagonal + rectAproxCost * (direct - 2 * diagonal);
             //Distancia de Euclidean (Lenta por el SQRT)
             //value += (int)Math.Truncate(RECT * Math.Sqrt((Math.Pow((actual.X - goal.X), 2) + Math.Pow((actual.Y - goal.Y), 2))));
-            //value = (value * (totalCostSumed / totalCostCounted))/100;
+            //value = this.getAproximateCostTerain(value);
             return value;
         }
 
-        private int getAproximateCostTerain()
+        private int getAproximateCostTerain(int moveCost)
         {
-            return 0;// (int)Math.Truncate(100 * totalCostSumed / totalCostCounted);
+            return (int)Math.Truncate(moveCost * totalCostSumed / totalCostCounted) + moveCost;
         }
     }
 }

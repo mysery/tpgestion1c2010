@@ -20,7 +20,7 @@ namespace SolucionAlumno
                 //Che esto esta bien??? me hace ruido :P
                 CheckPoint goal = listaCheckPoint[i + 1];
                 Logger.appendInfo("Buscando conexion entre " + start.Id + " y " + goal.Id);
-                Conexion conexion = algorithm.pathFind(start, goal, mapaDeCostos);
+                Conexion conexion = algorithm.pathFind(start, goal, mapaDeCostos, zonasProhibidas);
                 if (conexion == null)
                 {
                     Logger.appendError("No se encontro camino entre " + start.Id + " y " + goal.Id);
