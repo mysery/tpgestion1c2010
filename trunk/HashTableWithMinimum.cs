@@ -6,7 +6,7 @@ namespace SolucionAlumno
 {
     class HashTableWithMinimum : IOrderSerchStruct<Node>
     {
-        private Hashtable internalTable = new Hashtable(1000);
+        private Hashtable internalTable = new Hashtable(5000);
         private Node minimum;
 
         #region Miembros de IOrderSerchStruct<Node>
