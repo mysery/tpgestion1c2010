@@ -54,7 +54,7 @@ namespace SolucionAlumno
 		/**
 		*	Calcula el costo de movimiento.
 		*/
-        public int move(Node previousNode, Node actual, MapaDeCostos mapaDeCostos)
+        public int move(Node previousNode, Node actual)
         {
             double costToFix = actual.Costo.Valor;
             //Guardo un conteo de costos para poder realizar una estadistica.
@@ -75,10 +75,12 @@ namespace SolucionAlumno
 		/**
 		*	Calcula el costo aproximado (heuristica) de movimiento hasta el nodo final.
 		*/
-        public int aproximateMove(Point actual, Point goal)
+        public int aproximateMove(Point start, Point actual, Point goal)
         {
+            
             int value = 0;
             //return 0;
+            
             int rectAproxCost = RECT; //this.getAproximateCostTerain(RECT);
             int diagonalAproxCost = DIAGONAL; //this.getAproximateCostTerain(DIAGONAL);
             int diagonal = Math.Min(Math.Abs(actual.X - goal.X), Math.Abs(actual.Y - goal.Y));
@@ -87,6 +89,13 @@ namespace SolucionAlumno
             //Distancia de Euclidean (Lenta por el SQRT)
             //value += (int)Math.Truncate(RECT * Math.Sqrt((Math.Pow((actual.X - goal.X), 2) + Math.Pow((actual.Y - goal.Y), 2))));
             //value = this.getAproximateCostTerain(value);
+            value = (int)Math.Truncate(value * (1.0 + RECT * DIAGONAL / 2 /36000));
+            int dx1 = actual.X - goal.X;
+            int dy1 = actual.Y - goal.Y;
+            int dx2 = start.X - goal.X;
+            int dy2 = start.Y - goal.Y;
+            int cross = Math.Abs(dx1 * dy2 * 100 - dx2 * dy1 * 100);
+            value += (int)Math.Truncate(cross * 0.001);
             return value;
         }
 

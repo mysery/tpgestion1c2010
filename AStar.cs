@@ -48,7 +48,7 @@ namespace SolucionAlumno
                 List<Node> adjacentNodes = actualNode.getAdjacent(mapaDeCostos, closeStruct, zonasProhibidas);
                 foreach(Node adjacent in adjacentNodes) {
                     //NextNode se entiende como el nodo de donde venis quizas esta mal el nombre en el metodo.
-                    adjacent.calculateCost(actualNode, goalNode.Point, mapaDeCostos);
+                    adjacent.calculateCost(startNode.Point, actualNode, goalNode.Point);
                     if (!openStruct.Contains(adjacent))
                     {
                         // Entiendo que parent no como nodo padre 

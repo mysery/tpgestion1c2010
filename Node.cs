@@ -49,9 +49,9 @@ namespace SolucionAlumno
 		/**
 		* Calcula el costo de movimiento para el Nodo
 		*/
-        public void calculateCost(Node previousPoint, Point goal, MapaDeCostos mapaDeCostos) {
-            this.gValue = CostCalculator.Instance.move(previousPoint, this, mapaDeCostos);
-            this.hValue = CostCalculator.Instance.aproximateMove(this.Point, goal);
+        public void calculateCost(Point start, Node previousPoint, Point goal) {
+            this.gValue = CostCalculator.Instance.move(previousPoint, this);
+            this.hValue = CostCalculator.Instance.aproximateMove(start, this.Point, goal);
             fValue = gValue + hValue;
         }
         
