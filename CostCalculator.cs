@@ -19,6 +19,10 @@ namespace SolucionAlumno
 		*	Constante con el costo de moviento diagonal, multiplicado por 100 y truncado para no manerjar puntos flotantes. 
 		*/
         private const int DIAGONAL = 282;
+        /**
+         * Constante con el indice para darle al costo una importancia suficiente como para elejir un buen camino.
+         */
+        private const int COST_FIX = 300;
 
         private int totalCostCounted = 0;
         private double totalCostSumed = 0;
@@ -59,11 +63,11 @@ namespace SolucionAlumno
             int precalculed = previousNode.GValue;
             if (previousNode.Point.X == actual.Point.X || previousNode.Point.Y == actual.Point.Y)
             {
-                precalculed += (int)Math.Truncate((RECT - 275 * costToFix) + RECT);
+                precalculed += (int)Math.Truncate((RECT - COST_FIX * costToFix) + RECT);
             } 
             else
             {
-                precalculed += (int)Math.Truncate((DIAGONAL - 275 * costToFix) + DIAGONAL);
+                precalculed += (int)Math.Truncate((DIAGONAL - COST_FIX * costToFix) + DIAGONAL);
             }
             return Math.Abs(precalculed);
         }
@@ -88,7 +92,7 @@ namespace SolucionAlumno
 
         private int getAproximateCostTerain(int moveCost)
         {
-            return (int)Math.Truncate(moveCost * totalCostSumed / totalCostCounted) + moveCost;
+            return (int)Math.Truncate(moveCost - ((COST_FIX * totalCostSumed) / totalCostCounted)) + moveCost;
         }
     }
 }

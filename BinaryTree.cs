@@ -184,17 +184,18 @@ namespace SolucionAlumno
 
         public bool Remove(T value) {
             BinaryTreeNode<T> node = Find(value);
-            return this.Remove(node);
+            return (this.Remove(node) != null);
         }
 
         /// <summary>
         /// Remueve un nodo.
         /// </summary>
         /// <param name="removeNode">Nodo a remover.</param>
-        /// <returns></returns>
-        public bool Remove(BinaryTreeNode<T> removeNode) {
+        /// <returns>referencia al nodo que cambio.</returns>
+        public BinaryTreeNode<T> Remove(BinaryTreeNode<T> removeNode)
+        {
             if (removeNode == null) {
-                return false;
+                return null;
             }
             bool esRaiz = (removeNode == raiz);
             if (this.Size == 1)
@@ -268,15 +269,18 @@ namespace SolucionAlumno
             //Remueve para el caso que tenga 2 hijos
             else
             {
-                BinaryTreeNode<T> successorNode = removeNode.LeftChild;
-                while (successorNode.RightChild != null)
+                BinaryTreeNode<T> successorNode = removeNode.RightChild;
+                while (successorNode.LeftChild != null)
                 {
-                    successorNode = successorNode.RightChild;
+                    successorNode = successorNode.LeftChild;
                 }
-                removeNode.Value = successorNode.Value;
+                T auxValue = successorNode.Value;
                 this.Remove(successorNode);
+                removeNode.Value = auxValue;
+                return removeNode;
+                //successorNode.replaceNodeReferences(removeNode);
             }
-            return true;
+            return new BinaryTreeNode<T>();
         }
 
         public void Clear() {
