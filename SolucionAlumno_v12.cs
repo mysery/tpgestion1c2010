@@ -5,7 +5,7 @@ using BibliotecaComun;
 
 namespace SolucionAlumno
 {
-    public class SolucionAlumnoConHashTable : ISolucion
+    public class SolucionAlumno_v12 : ISolucion
     {
 
         public string curso()
@@ -20,12 +20,12 @@ namespace SolucionAlumno
 
         public string descripcion()
         {
-            return "Solucion_v1.1, Esta solucion usa un hashTable";
+            return "Solucion_v1.2, A* Basico, Con HashTable y un BinaryTree";
         }
 
         public ListaConexiones buscarConexiones(ListaCheckPoint listaCheckPoint, MapaDeCostos mapaDeCostos, List<ZonaProhibida> zonasProhibidas)
         {
-            return new ConnectionFindAbstraction().ConnectionFind(new AStar(new HashTableWithMinimum(), new HashTableWithMinimum()), listaCheckPoint, mapaDeCostos, zonasProhibidas);
+            return new ConnectionFindAbstraction().ConnectionFind(new AStar(new HashTableWithTree(), new HashTableWithTree()), listaCheckPoint, mapaDeCostos, zonasProhibidas);
         }
 
     }

@@ -6,7 +6,7 @@ namespace SolucionAlumno
 {
     class HashTableWithTree : IOrderSerchStruct<Node>
     {
-        private Hashtable internalTable = new Hashtable(20000);
+        private Hashtable internalTable = new Hashtable(10000);
         private BinaryTree<Node> internalTree = new BinaryTree<Node>();
 
         #region Miembros de IOrderSerchStruct<Node>
