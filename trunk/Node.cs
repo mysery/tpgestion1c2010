@@ -80,10 +80,13 @@ namespace SolucionAlumno
                             {
                                 foreach (ZonaProhibida zonaProhibida in zonasProhibidas)
                                 {
-
-                                    b = b || mapaDeCostos.verificarZonaProhibida(point, zonaProhibida);
-                                    if (b)
-                                        break;
+                                    if (nodoAdyacente.Point.X >= zonaProhibida.X && nodoAdyacente.Point.X <= (zonaProhibida.X + zonaProhibida.Width))
+                                        if (nodoAdyacente.Point.Y >= zonaProhibida.Y && nodoAdyacente.Point.Y <= (zonaProhibida.Y + zonaProhibida.Height))
+                                            //if (mapaDeCostos.verificarZonaProhibida(point, zonaProhibida))
+                                            {
+                                                b = true;
+                                                break;
+                                            }
                                 }
                                 if (!b)
                                 {
@@ -95,18 +98,6 @@ namespace SolucionAlumno
                 }
             }
             return nodosAdyacentes;
-            /*
-            //TODO OPTIMIZAR ESTA MIERDA!!!!! 12.34 ya no puedo pensar :P
-            List<Node> listNodes = new List<Node>();
-            this.checkAdjacent(mapaDeCostos, this.Point.X, this.Point.Y - 1, closeList, listNodes);
-            this.checkAdjacent(mapaDeCostos, this.Point.X, this.Point.Y + 1, closeList, listNodes);
-            this.checkAdjacent(mapaDeCostos, this.Point.X + 1, this.Point.Y - 1, closeList, listNodes);
-            this.checkAdjacent(mapaDeCostos, this.Point.X + 1, this.Point.Y, closeList, listNodes);
-            this.checkAdjacent(mapaDeCostos, this.Point.X + 1, this.Point.Y + 1, closeList, listNodes);
-            this.checkAdjacent(mapaDeCostos, this.Point.X - 1, this.Point.Y - 1, closeList, listNodes);
-            this.checkAdjacent(mapaDeCostos, this.Point.X - 1, this.Point.Y, closeList, listNodes);
-            this.checkAdjacent(mapaDeCostos, this.Point.X - 1, this.Point.Y + 1, closeList, listNodes);
-            return listNodes;*/
         }
 
         /**
