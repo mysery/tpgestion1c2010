@@ -24,7 +24,7 @@ namespace SolucionAlumno
          * Busca un camino entre startCheckpoint y goalCheckpoint teniendo en cuenta los costos del mapaDeCostos.
          * Implementando el algoritmo A*
          */
-        public Conexion pathFind(CheckPoint startCheckpoint, CheckPoint goalCheckpoint, MapaDeCostos mapaDeCostos, List<ZonaProhibida> zonasProhibidas)
+        public Conexion pathFind(CheckPoint startCheckpoint, CheckPoint goalCheckpoint, MapaDeCostos mapaDeCostos, PreProcesingZones zonasProhibidas)
         {
             //Se limpian las estructuras.
             openStruct.Clear();

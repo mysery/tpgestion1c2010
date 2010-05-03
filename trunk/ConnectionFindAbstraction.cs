@@ -10,7 +10,7 @@ namespace SolucionAlumno
         /**
          * Abstraccion para obtener un camino para un algoritmo que implementa IAlgorithm.
          */
-        public ListaConexiones ConnectionFind(IAlgorithm algorithm, ListaCheckPoint listaCheckPoint, MapaDeCostos mapaDeCostos, List<ZonaProhibida> zonasProhibidas)
+        public ListaConexiones ConnectionFind(IAlgorithm algorithm, ListaCheckPoint listaCheckPoint, MapaDeCostos mapaDeCostos, PreProcesingZones zonasProhibidas)
         {
             int cantCheckpoints = listaCheckPoint.Count - 1;
             ListaConexiones listaConexiones = new ListaConexiones();
