@@ -58,7 +58,7 @@ namespace SolucionAlumno
 		/**
 		* Obtiene la lista de Nodos adyasentes en el mapa.
 		*/
-        public List<Node> getAdjacent(MapaDeCostos mapaDeCostos, IOrderSerchStruct<Node> closeList, List<ZonaProhibida> zonasProhibidas)
+        public List<Node> getAdjacent(MapaDeCostos mapaDeCostos, IOrderSerchStruct<Node> closeList, PreProcesingZones zonasProhibidas)
         {
             List<Node> nodosAdyacentes = new List<Node>();
 
@@ -70,28 +70,19 @@ namespace SolucionAlumno
                     {
                         Point point = new Point();
                         point.X = x;
-                        point.Y = y;
-                        bool b = false;
+                        point.Y = y;                        
                         if (mapaDeCostos.verificarPosicion(point))
                         {
                             Node nodoAdyacente = new Node(mapaDeCostos.getCostoPosicion(point), point);
                             if (nodoAdyacente.Costo.esTransitable() &&
                                 !closeList.Contains(nodoAdyacente))
                             {
-                                foreach (ZonaProhibida zonaProhibida in zonasProhibidas)
+                                ZonaProhibida zonaProhibida = zonasProhibidas[nodoAdyacente.Point.X, nodoAdyacente.Point.Y];
+                                if (zonaProhibida != null)// && mapaDeCostos.verificarZonaProhibida(nodoAdyacente.Point, zonaProhibida))
                                 {
-                                    if (nodoAdyacente.Point.X >= zonaProhibida.X && nodoAdyacente.Point.X <= (zonaProhibida.X + zonaProhibida.Width))
-                                        if (nodoAdyacente.Point.Y >= zonaProhibida.Y && nodoAdyacente.Point.Y <= (zonaProhibida.Y + zonaProhibida.Height))
-                                            //if (mapaDeCostos.verificarZonaProhibida(point, zonaProhibida))
-                                            {
-                                                b = true;
-                                                break;
-                                            }
+                                    continue;
                                 }
-                                if (!b)
-                                {
-                                    nodosAdyacentes.Add(nodoAdyacente);
-                                }
+                                nodosAdyacentes.Add(nodoAdyacente);
                             }
                         }
                     }
