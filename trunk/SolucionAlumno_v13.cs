@@ -25,7 +25,7 @@ namespace SolucionAlumno
 
         public ListaConexiones buscarConexiones(ListaCheckPoint listaCheckPoint, MapaDeCostos mapaDeCostos, List<ZonaProhibida> zonasProhibidas)
         {
-            return new ConnectionFindAbstraction().ConnectionFind(new AStar(new HashTableWithSortedList(), new HashTableWithSortedList()), listaCheckPoint, mapaDeCostos, new PreProcesingZones(mapaDeCostos.getDimensiones().Width, mapaDeCostos.getDimensiones().Height, zonasProhibidas));
+            return new ConnectionFindAbstraction().ConnectionFind(new AStar(new HashTableWithSortedList(), new HashTableWithSortedList()), listaCheckPoint, mapaDeCostos, new PreProcesingZonesHash(mapaDeCostos.getDimensiones().Width, mapaDeCostos.getDimensiones().Height, zonasProhibidas));
         }
 
     }

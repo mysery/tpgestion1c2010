@@ -58,7 +58,7 @@ namespace SolucionAlumno
 		/**
 		* Obtiene la lista de Nodos adyasentes en el mapa.
 		*/
-        public List<Node> getAdjacent(MapaDeCostos mapaDeCostos, IOrderSerchStruct<Node> closeList, PreProcesingZones zonasProhibidas)
+        public List<Node> getAdjacent(MapaDeCostos mapaDeCostos, IOrderSerchStruct<Node> closeList, IPreProcesingZones zonasProhibidas)
         {
             List<Node> nodosAdyacentes = new List<Node>();
 
@@ -193,7 +193,7 @@ namespace SolucionAlumno
 		*/
         public override int GetHashCode()
         {
-            return this.point.X * 1000 + this.point.Y;
+            return this.point.X * 10000 + this.point.Y;
         }
 
         public override string ToString()
