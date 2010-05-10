@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using BibliotecaComun;
 using System.Drawing;
+using System.Collections;
 
 namespace SolucionAlumno
 {
@@ -12,9 +13,9 @@ namespace SolucionAlumno
     class AStar : IAlgorithm
     {
         private IOrderSerchStruct<Node> openStruct;
-        private IOrderSerchStruct<Node> closeStruct;
+        private Hashtable closeStruct;
 
-        public AStar(IOrderSerchStruct<Node> pOpenStruct, IOrderSerchStruct<Node> pCloseStruct)
+        public AStar(IOrderSerchStruct<Node> pOpenStruct, Hashtable pCloseStruct)
         {
             this.openStruct = pOpenStruct;
             this.closeStruct = pCloseStruct;
@@ -37,9 +38,8 @@ namespace SolucionAlumno
 
             openStruct.Add(startNode);
             while(openStruct.Size > 0) {
-                Node actualNode = openStruct.getMinimoAndRemove();
-                //openList.Remove(actualNode);
-                closeStruct.Add(actualNode);
+                Node actualNode = openStruct.getMinimoAndRemove();                
+                closeStruct.Add(actualNode.GetHashCode(), actualNode);
                 
                 if(actualNode.Equals(goalNode)) {
                     return this.makeTheWay(startCheckpoint, goalCheckpoint, actualNode);

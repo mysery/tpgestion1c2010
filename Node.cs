@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 using BibliotecaComun;
+using System.Collections;
 
 namespace SolucionAlumno
 {
@@ -58,7 +59,7 @@ namespace SolucionAlumno
 		/**
 		* Obtiene la lista de Nodos adyasentes en el mapa.
 		*/
-        public List<Node> getAdjacent(MapaDeCostos mapaDeCostos, IOrderSerchStruct<Node> closeList, IPreProcesingZones zonasProhibidas)
+        public List<Node> getAdjacent(MapaDeCostos mapaDeCostos, Hashtable closeList, IPreProcesingZones zonasProhibidas)
         {
             List<Node> nodosAdyacentes = new List<Node>();
 
@@ -75,7 +76,7 @@ namespace SolucionAlumno
                         {
                             Node nodoAdyacente = new Node(mapaDeCostos.getCostoPosicion(point), point);
                             if (nodoAdyacente.Costo.esTransitable() &&
-                                !closeList.Contains(nodoAdyacente))
+                                !closeList.Contains(nodoAdyacente.GetHashCode()))
                             {
                                 ZonaProhibida zonaProhibida = zonasProhibidas[nodoAdyacente.Point.X, nodoAdyacente.Point.Y];
                                 if (zonaProhibida != null)// && mapaDeCostos.verificarZonaProhibida(nodoAdyacente.Point, zonaProhibida))
