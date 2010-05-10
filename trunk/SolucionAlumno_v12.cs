@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using BibliotecaComun;
+using System.Collections;
 
 namespace SolucionAlumno
 {
@@ -25,7 +26,7 @@ namespace SolucionAlumno
 
         public ListaConexiones buscarConexiones(ListaCheckPoint listaCheckPoint, MapaDeCostos mapaDeCostos, List<ZonaProhibida> zonasProhibidas)
         {
-            return new ConnectionFindAbstraction().ConnectionFind(new AStar(new HashTableWithTree(), new HashTableWithTree()), listaCheckPoint, mapaDeCostos, new PreProcesingZonesMatrix(mapaDeCostos.getDimensiones().Width, mapaDeCostos.getDimensiones().Height, zonasProhibidas));
+            return new ConnectionFindAbstraction().ConnectionFind(new AStar(new HashTableWithTree(), new Hashtable()), listaCheckPoint, mapaDeCostos, new PreProcesingZonesMatrix(mapaDeCostos.getDimensiones().Width, mapaDeCostos.getDimensiones().Height, zonasProhibidas));
         }
 
     }

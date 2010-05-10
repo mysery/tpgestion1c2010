@@ -10,6 +10,7 @@ namespace SolucionAlumno
     class PreProcesingZonesHash : IPreProcesingZones
     {
         private Hashtable hashZones;
+        private const int PRIME = 10000;
 
         public PreProcesingZonesHash(int width, int height, List<ZonaProhibida> zonasProhibidas)
         {
@@ -19,14 +20,15 @@ namespace SolucionAlumno
 
         public void processZones(List<ZonaProhibida> zonasProhibidas)
         {
+           
             foreach (ZonaProhibida zonaProhibida in zonasProhibidas)
             {
                 zonaProhibida.GetHashCode();
                 for (int i = zonaProhibida.X; i <= (zonaProhibida.X + zonaProhibida.Width); i++)
                     for (int j = zonaProhibida.Y; j <= (zonaProhibida.Y + zonaProhibida.Height); j++)
-                    { 
-                        if (!hashZones.Contains((i * 10000 + j)))
-                            hashZones.Add((i * 10000 + j), zonaProhibida);
+                    {
+                        if (!hashZones.Contains((i * PRIME + j)))
+                            hashZones.Add((i * PRIME + j), zonaProhibida);
                     }
             }
         }
@@ -34,7 +36,7 @@ namespace SolucionAlumno
         public ZonaProhibida this[int x, int y]
         { 
             get {
-                return hashZones[(x * 10000 + y)] as ZonaProhibida;
+                return hashZones[(x * PRIME + y)] as ZonaProhibida;
                 }
         }
     }
