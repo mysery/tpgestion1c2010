@@ -38,7 +38,7 @@ namespace SolucionAlumno
 
             openStruct.Add(startNode);
             while(openStruct.Size > 0) {
-                Node actualNode = openStruct.getMinimoAndRemove();                
+                Node actualNode = openStruct.getMinimoAndRemove();
                 closeStruct.Add(actualNode.GetHashCode(), actualNode);
                 
                 if(actualNode.Equals(goalNode)) {
