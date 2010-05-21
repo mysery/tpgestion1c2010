@@ -6,8 +6,8 @@ namespace SolucionAlumno
 {
     class HashTableWithSortedList : IOrderSerchStruct<Node>
     {
-        private Hashtable internalTable = new Hashtable(10000);        
-        private SortedList internalList = new SortedList(new ComparerNode(), 1000);
+        private Hashtable internalTable = new Hashtable();        
+        private SortedList internalList = new SortedList(new ComparerNode());
 
         #region Miembros de IOrderSerchStruct<Node>
 

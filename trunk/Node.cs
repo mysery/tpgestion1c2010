@@ -51,8 +51,8 @@ namespace SolucionAlumno
 		* Calcula el costo de movimiento para el Nodo
 		*/
         public void calculateCost(Point start, Node previousPoint, Point goal) {
-            this.gValue = CostCalculator.Instance.move(previousPoint, this);
-            this.hValue = CostCalculator.Instance.aproximateMove(start, this.Point, goal);
+            this.gValue = CostEuclidian.Instance.move(previousPoint, this);
+            this.hValue = CostEuclidian.Instance.aproximateMove(start, this.Point, goal);
             fValue = gValue + hValue;
         }
         
@@ -90,25 +90,6 @@ namespace SolucionAlumno
                 }
             }
             return nodosAdyacentes;
-        }
-
-        /**
-         * Agrega un adjacente cuando corresponde a la lista de nodos.
-         */
-        private void checkAdjacent(MapaDeCostos mapaDeCostos, int x, int y, IOrderSerchStruct<Node> closeList, List<Node> listNodes)
-        {
-            Point point = new Point(x, y);
-            if (mapaDeCostos.verificarPosicion(point))
-            {
-                Node node = new Node(mapaDeCostos.getCostoPosicion(point), point);
-                if (node.Costo.esTransitable() &&
-                    !closeList.Contains(node))
-                {
-                    //TODO A LA PIPETUA!!!
-                    //mapaDeCostos.verificarZonaProhibida()
-                    listNodes.Add(node);
-                }
-            }
         }
 
 		/**
@@ -194,14 +175,12 @@ namespace SolucionAlumno
 		*/
         public override int GetHashCode()
         {
-            return this.point.X * 10000 + this.point.Y;
+            return this.point.X << 10000 | this.point.Y;
         }
 
         public override string ToString()
         {
             return this.Point.ToString();
-                
-            //return base.ToString();
         }
 
 
