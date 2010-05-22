@@ -1,25 +1,29 @@
-namespace SolucionAlumno {
-	/// <summary>
-	/// This class is configured with a ConcreteStrategy object, maintains a reference
-	/// to a Strategy object and may define an interface that lets Strategy access its
-	/// data.
-	/// </summary>
-	public class CostCalculator {
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Drawing;
 
-        public enum CalculationType : byte
+namespace SolucionAlumno
+{
+	/// <summary>
+	/// Encargado de obtener el calculador de costo.
+	/// </summary>
+	class CostCalculator {
+
+        public enum CalculationType
         {
             CostBestFit,
             CostEuclidian,
             CostStadistic
         }
 
-		public CostCalculatorStrategy m_CostCalculatorStrategy;
+		private CostCalculatorStrategy internalCostCalculator;
 
 		public CostCalculator(CalculationType type){
-
+            internalCostCalculator = this.getCostCalculator(type);
 		}
 
-        private CostCalculatorStrategy GetCalculation(CalculationType type)
+        private CostCalculatorStrategy getCostCalculator(CalculationType type)
         {
             switch (type)
             {
@@ -30,14 +34,27 @@ namespace SolucionAlumno {
             }
         }
 
-		public virtual void Dispose(){
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="actual"></param>
+        /// <param name="goal"></param>
+        /// <returns></returns>
+        public int aproximateMove(Point start, Point actual, Point goal)
+        {
+            return this.internalCostCalculator.aproximateMove(start, actual, goal);
+        }
 
-		}
-
-		public void ContextInterface(){
-
-		}
-
-	}//end Context
-
-}//end namespace Sistema
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="previousNode"></param>
+        /// <param name="actual"></param>
+        /// <returns></returns>
+        public int move(Node previousNode, Node actual)
+        {
+            return this.internalCostCalculator.move(previousNode, actual);
+        }
+	}
+}
