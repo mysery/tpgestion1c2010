@@ -50,9 +50,9 @@ namespace SolucionAlumno
 		/**
 		* Calcula el costo de movimiento para el Nodo
 		*/
-        public void calculateCost(Point start, Node previousPoint, Point goal) {
-            this.gValue = CostEuclidian.Instance.move(previousPoint, this);
-            this.hValue = CostEuclidian.Instance.aproximateMove(start, this.Point, goal);
+        public void calculateCost(Point start, Node previousPoint, Point goal, CostCalculator costCalculator) {
+            this.gValue = costCalculator.move(previousPoint, this);
+            this.hValue = costCalculator.aproximateMove(start, this.Point, goal);
             fValue = gValue + hValue;
         }
         

@@ -10,7 +10,7 @@ namespace SolucionAlumno
         /**
          * Abstraccion para obtener un camino para un algoritmo que implementa IAlgorithm.
          */
-        public ListaConexiones ConnectionFind(IAlgorithm algorithm, ListaCheckPoint listaCheckPoint, MapaDeCostos mapaDeCostos, IPreProcesingZones zonasProhibidas)
+        public ListaConexiones ConnectionFind(IAlgorithm algorithm, ListaCheckPoint listaCheckPoint, MapaDeCostos mapaDeCostos, IPreProcesingZones zonasProhibidas, CostCalculator costCalculator)
         {
             int cantCheckpoints = listaCheckPoint.Count - 1;
             ListaConexiones listaConexiones = new ListaConexiones();
@@ -20,7 +20,7 @@ namespace SolucionAlumno
                 //Che esto esta bien??? me hace ruido :P
                 CheckPoint goal = listaCheckPoint[i + 1];
                 Logger.appendInfo("Buscando conexion entre " + start.Id + " y " + goal.Id);
-                Conexion conexion = algorithm.pathFind(start, goal, mapaDeCostos, zonasProhibidas);
+                Conexion conexion = algorithm.pathFind(start, goal, mapaDeCostos, zonasProhibidas, costCalculator);
                 if (conexion == null)
                 {
                     Logger.appendError("No se encontro camino entre " + start.Id + " y " + goal.Id);
