@@ -15,7 +15,9 @@ namespace SolucionAlumno
             BLACK
         }
         //Contiene items con la misma key que el nodo (no hay nodos repetidos en el arbol)
-        private Hashtable overflow;
+        private SortedList overflow;
+        //vinculo con el padre en el cual fue agregado como overflow.
+        private RedBlackNode<T> overflowParent;
         private bool isOverflow = false;
 		// color - used to balance the tree
         private Colors color;
@@ -48,6 +50,12 @@ namespace SolucionAlumno
         public virtual bool IsOverflow
         {
             get { return isOverflow; }
+        }
+
+        public virtual RedBlackNode<T> OverflowParent
+        {
+            get { return overflowParent; }
+            set { this.overflowParent = value; }
         }
 
 		///<summary>
@@ -109,8 +117,9 @@ namespace SolucionAlumno
         public void addOverflowItem(RedBlackNode<T> rbNode)
         {
             if (this.overflow == null)
-                this.overflow = new Hashtable();
+                this.overflow = new SortedList();
             rbNode.isOverflow = true;
+            rbNode.OverflowParent = this;
             this.overflow.Add(rbNode.Value.GetHashCode(), rbNode);
         }
 
@@ -121,6 +130,13 @@ namespace SolucionAlumno
             return null;
         }
 
+        public RedBlackNode<T> getOverflowItem()
+        {
+            if (this.overflow != null)
+                return this.overflow.GetByIndex(0) as RedBlackNode<T>;
+            return null;
+        }
+
         public void removeOverflowItem(T value)
         {
             if (this.overflow != null)
@@ -128,11 +144,8 @@ namespace SolucionAlumno
                 //Si el item a remover es el mismo hay que hacer un biribiri
                 if (this.Value.Equals(value))
                 {   //Tomo el primer valor y lo remplazo.
-                    IEnumerator en = this.overflow.Values.GetEnumerator();
-                    en.MoveNext();
-                    this.Value = (en.Current as RedBlackNode<T>).Value;
-                    this.overflow.Remove(this.Value.GetHashCode());
-                    //(en.Current as RedBlackNode<T>).copy(this);
+                    this.Value = (this.overflow.GetByIndex(0) as RedBlackNode<T>).Value;
+                    this.overflow.Remove(this.Value.GetHashCode());                    
                 } else 
                     this.overflow.Remove(value.GetHashCode());
 
@@ -146,20 +159,9 @@ namespace SolucionAlumno
             return this.overflow != null;
         }
 
-        public void copy(RedBlackNode<T> from)
-        {
-            this.Color = from.Color;
-            this.Left = from.Left;
-            this.Right = from.Right;
-            this.Parent = from.Parent;
-            if (from.overflow.Count != 0)
-                this.overflow = from.overflow;
-            this.isOverflow = false;
-        }
-
         public override string ToString()
         {
-            return this.Value + " - " + ((this.overflow != null)? "O": "");
+            return this.Value + ((this.overflow != null) ? " - O" : "");
         }
 
         public override bool Equals(object o)
@@ -201,6 +203,5 @@ namespace SolucionAlumno
         {
             return !(a == b);
         }
-
     }
 }
