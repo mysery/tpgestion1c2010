@@ -79,34 +79,35 @@ namespace SolucionAlumno
         /// <summary>
         /// Busca un nodo segun el valor, va asignando la variable lastSearchNode por los nodos recorridos
         /// </summary>
-        /// <param name="value">valor que se quiere buscar asociado al nodo.</param>
-        /// <returns>Nodo que contiene el valor buscado.</returns>
-        public RedBlackNode<T> Find(T value)
-        {
-            return this.Find(value, true);
-        }
-
-        /// <summary>
-        /// Busca un nodo segun el valor, va asignando la variable lastSearchNode por los nodos recorridos
-        /// </summary>
-        /// <param name="value">valor que se quiere buscar asociado al nodo.</param>
-        /// <param name="withOverflow">true si va a buscar en el overflow</param>
+        /// <param name="value">valor que se quiere buscar asociado al nodo.</param>        
         /// <returns></returns>
-        public RedBlackNode<T> Find(T value, bool withOverflow)
+        public RedBlackNode<T> Find(T value)
         {
             int result;
 
-            //TODO PROBAR ESTO:
-            //if (lastSearchNode != null && comparer((IComparable)value, (IComparable)lastSearchNode.Value) == 0)
-            //    return lastSearchNode;
+            //TODO PROBAR ESTO: Busqueda performante ???
+           if (lastSearchNode != null && comparer((IComparable)value, (IComparable)lastSearchNode.Value) == 0)
+           {
+               if (lastSearchNode.IsOverflow && !lastSearchNode.Value.Equals(value))
+                   lastSearchNode = lastSearchNode.OverflowParent;
+               if (lastSearchNode.hasOverflow() && !lastSearchNode.Value.Equals(value))
+               {
+                   RedBlackNode<T> auxFind = lastSearchNode.getOverflowItem(value);
+                   if (auxFind != null)
+                       lastSearchNode = auxFind;
+               }
+               
+               return lastSearchNode;
+            }
+            //Busqueda desde la raiz
             RedBlackNode<T> treeNode = root;
             while (treeNode != null)
             {
                 result = comparer((IComparable)value, (IComparable)treeNode.Value);
                 if (result == 0)
                 {
-                    //Si tiene overflow hay que ver cual corresponde de los repetidos.
-                    if (withOverflow && treeNode.hasOverflow())
+                    //Si tiene overflow y no es el nodo buscado, hay que ver cual corresponde de los repetidos.
+                    if (treeNode.hasOverflow() && !treeNode.Value.Equals(value))
                     {
                         RedBlackNode<T> auxFind = treeNode.getOverflowItem(value);
                         if (auxFind != null)
@@ -143,7 +144,11 @@ namespace SolucionAlumno
             // traverse to the extreme left to find the smallest key
             while (treeNode.Left != null)
                 treeNode = treeNode.Left;
-
+            
+            //Esto es por performance, ya que remover un item de overflow es mejor que remover el nodo del arbol.
+            if (treeNode.hasOverflow())
+                treeNode = treeNode.getOverflowItem();
+            
             lastSearchNode = treeNode;
 
             return treeNode;
@@ -212,8 +217,7 @@ namespace SolucionAlumno
                     z.removeOverflowItem(z.Value);
                 else
                 {
-                    RedBlackNode<T> overItem = this.Find(z.Value, false);
-                    overItem.removeOverflowItem(z.Value);
+                    z.OverflowParent.removeOverflowItem(z.Value);
                 }
                 //El remove con overflow se volvio muy performante para el arbol. yea!!!
             } else {
@@ -343,7 +347,7 @@ namespace SolucionAlumno
         public T getMinimoAndRemove()
         {
             RedBlackNode<T> node = this.GetMinNode();
-            T value = this.GetMinNode().Value;
+            T value = node.Value;
             this.Remove(node);
             return value;
         }
