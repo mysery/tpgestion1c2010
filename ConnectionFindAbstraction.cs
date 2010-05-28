@@ -17,7 +17,6 @@ namespace SolucionAlumno
             for (int i = 0; i < cantCheckpoints; i++)
             {
                 CheckPoint start = listaCheckPoint[i];
-                //Che esto esta bien??? me hace ruido :P
                 CheckPoint goal = listaCheckPoint[i + 1];
                 Logger.appendInfo("Buscando conexion entre " + start.Id + " y " + goal.Id);
                 Conexion conexion = algorithm.pathFind(start, goal, mapaDeCostos, zonasProhibidas, costCalculator);

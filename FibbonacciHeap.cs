@@ -5,6 +5,9 @@ namespace SolucionAlumno
 {
     /// <summary>
     /// Modificacion del FibonacciHeap para que aplique a nuestra solucion.
+    /// 
+    /// 
+    /// 
     /// This class implements a Fibonacci heap data structure. Much of the
     /// code in this class is based on the algorithms in Chapter 21 of the
     /// "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein.
