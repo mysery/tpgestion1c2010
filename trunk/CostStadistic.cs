@@ -27,6 +27,10 @@ namespace SolucionAlumno
             int diagonal = Math.Min(Math.Abs(actual.X - goal.X), Math.Abs(actual.Y - goal.Y));
             int direct = Math.Abs(actual.X - goal.X) + Math.Abs(actual.Y - goal.Y);
             value += diagonalAproxCost * diagonal + rectAproxCost * (direct - 2 * diagonal);
+
+            //TIE BREAKERS!!!
+            value = (int)Math.Truncate(value * 1.275);//(1.0 + (((RECT + DIAGONAL) / 2 + (totalCostSumed / totalCostCounted) * COST_PONDERATION) / 1500)));
+
             return value;
 		}
 

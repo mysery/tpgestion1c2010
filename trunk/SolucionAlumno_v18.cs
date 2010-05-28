@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace SolucionAlumno
 {
-    public class SolucionAlumno_v16 : ISolucion
+    public class SolucionAlumno_v18 : ISolucion
     {
 
         public string curso()
@@ -21,12 +21,12 @@ namespace SolucionAlumno
 
         public string descripcion()
         {
-            return "Solucion_v1.6, A* Basico, FibbonacciHeap para abiertos. CostSimpleTieBreak";
+            return "Solucion_v1.8, A* Basico, FibbonacciHeap para abiertos. CostEuclidian";
         }
 
         public ListaConexiones buscarConexiones(ListaCheckPoint listaCheckPoint, MapaDeCostos mapaDeCostos, List<ZonaProhibida> zonasProhibidas)
         {
-            return new ConnectionFindAbstraction().ConnectionFind(new AStar(new FibonacciHeap<Node>(), new Hashtable()), listaCheckPoint, mapaDeCostos, new PreProcesingZonesHash(mapaDeCostos.getDimensiones().Width, mapaDeCostos.getDimensiones().Height, zonasProhibidas), new CostCalculator(CostCalculator.CalculationType.CostSimpleTieBreak));
+            return new ConnectionFindAbstraction().ConnectionFind(new AStar(new FibonacciHeap<Node>(), new Hashtable()), listaCheckPoint, mapaDeCostos, new PreProcesingZonesHash(mapaDeCostos.getDimensiones().Width, mapaDeCostos.getDimensiones().Height, zonasProhibidas), new CostCalculator(CostCalculator.CalculationType.CostStadistic));
         }
 
     }
