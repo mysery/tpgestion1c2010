@@ -21,7 +21,7 @@ namespace SolucionAlumno
 
         public string descripcion()
         {
-            return "Solucion_v1.2, A* Basico, Con HashTable y un BinaryTree";
+            return "Solucion_v1.2, A* Basico, Con Hibrido de HashTable y un BinaryTree para los abiertos";
         }
 
         public ListaConexiones buscarConexiones(ListaCheckPoint listaCheckPoint, MapaDeCostos mapaDeCostos, List<ZonaProhibida> zonasProhibidas)

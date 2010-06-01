@@ -21,7 +21,7 @@ namespace SolucionAlumno
 
         public string descripcion()
         {
-            return "Solucion_v1.1, A* Basico, Con HashTable con una variable minimo.";
+            return "Solucion_v1.1, A* Basico, Con HashTable con una variable minimo para los abiertos.";
         }
 
         public ListaConexiones buscarConexiones(ListaCheckPoint listaCheckPoint, MapaDeCostos mapaDeCostos, List<ZonaProhibida> zonasProhibidas)

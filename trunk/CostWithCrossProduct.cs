@@ -22,7 +22,7 @@ namespace SolucionAlumno
             int dy1 = (actual.Y - goal.Y);
             int dx2 = (start.X - goal.X);
             int dy2 = (start.Y - goal.Y);
-            int cross = Math.Abs(dx1 * dy2 * 100 - dx2 * dy1 * 100);
+            int cross = Math.Abs(dx1 * dy2 * RECT - dx2 * dy1 * RECT);
             value += (int)Math.Truncate(cross * 0.001);
         
             return value;

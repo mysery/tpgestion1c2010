@@ -6,7 +6,7 @@ namespace SolucionAlumno
 {
     interface IPreProcesingZones
     {
-        void processZones(List<ZonaProhibida> zonasProhibidas);
+        IPreProcesingZones processZones(List<ZonaProhibida> zonasProhibidas);
         ZonaProhibida this[int x, int y] { get; }
     }
 }

@@ -21,12 +21,12 @@ namespace SolucionAlumno
 
         public string descripcion()
         {
-            return "Solucion_v1.5, A* Basico, FibbonacciHeap para abiertos. CostBestFit";
+            return "Solucion_v1.5, A* Basico, FibbonacciHeap para abiertos. H(x)= Euclidiano";
         }
 
         public ListaConexiones buscarConexiones(ListaCheckPoint listaCheckPoint, MapaDeCostos mapaDeCostos, List<ZonaProhibida> zonasProhibidas)
         {
-            return new ConnectionFindAbstraction().ConnectionFind(new AStar(new FibonacciHeap<Node>(), new Hashtable()), listaCheckPoint, mapaDeCostos, new PreProcesingZonesHash(mapaDeCostos.getDimensiones().Width, mapaDeCostos.getDimensiones().Height, zonasProhibidas), new CostCalculator(CostCalculator.CalculationType.CostBestFit));
+            return new ConnectionFindAbstraction().ConnectionFind(new AStar(new FibonacciHeap<Node>(), new Hashtable()), listaCheckPoint, mapaDeCostos, new PreProcesingZonesHash(mapaDeCostos.getDimensiones().Width, mapaDeCostos.getDimensiones().Height, zonasProhibidas), new CostCalculator(CostCalculator.CalculationType.CostEuclidian));
         }
 
     }

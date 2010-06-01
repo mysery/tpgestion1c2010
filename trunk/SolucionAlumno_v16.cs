@@ -21,7 +21,7 @@ namespace SolucionAlumno
 
         public string descripcion()
         {
-            return "Solucion_v1.6, A* Basico, FibbonacciHeap para abiertos. CostSimpleTieBreak";
+            return "Solucion_v1.6, A* Basico, FibbonacciHeap para abiertos. H(x)= SimpleTieBreak";
         }
 
         public ListaConexiones buscarConexiones(ListaCheckPoint listaCheckPoint, MapaDeCostos mapaDeCostos, List<ZonaProhibida> zonasProhibidas)

@@ -43,17 +43,17 @@ namespace SolucionAlumno
         public virtual int move(Node previousNode, Node actual)
         {
             double costToFix = actual.Costo.Valor;
-            int precalculed = previousNode.GValue;
+            int precalculed;
             if (previousNode.Point.X == actual.Point.X || previousNode.Point.Y == actual.Point.Y)
             {
-                precalculed += (int)Math.Truncate((RECT - COST_PONDERATION * costToFix) + RECT);
+                precalculed = (int)((RECT - COST_PONDERATION * costToFix) + RECT);
                 //(COST_PONDERATION * (1 - costToFix)
             }
             else
             {
-                precalculed += (int)Math.Truncate((DIAGONAL - COST_PONDERATION * costToFix) + DIAGONAL);
+                precalculed = (int)((DIAGONAL - COST_PONDERATION * costToFix) + DIAGONAL);
             }
-            return Math.Abs(precalculed);
+            return previousNode.GValue + MyMath.Abs(precalculed);
         }
 	}
 }
