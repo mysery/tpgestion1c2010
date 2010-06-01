@@ -12,13 +12,18 @@ namespace SolucionAlumno
         private Hashtable hashZones;
         private const int PRIME = 10000;
 
+        public PreProcesingZonesHash()
+        {
+            hashZones = new Hashtable();
+        }
+        
         public PreProcesingZonesHash(int width, int height, List<ZonaProhibida> zonasProhibidas)
         {
             hashZones = new Hashtable();
             this.processZones(zonasProhibidas);
         }
 
-        public void processZones(List<ZonaProhibida> zonasProhibidas)
+        public IPreProcesingZones processZones(List<ZonaProhibida> zonasProhibidas)
         {
            
             foreach (ZonaProhibida zonaProhibida in zonasProhibidas)
@@ -31,6 +36,7 @@ namespace SolucionAlumno
                             hashZones.Add((i << PRIME | j), zonaProhibida);
                     }
             }
+            return this;
         }
 
         public ZonaProhibida this[int x, int y]

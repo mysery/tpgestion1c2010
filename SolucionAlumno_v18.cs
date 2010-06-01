@@ -21,7 +21,7 @@ namespace SolucionAlumno
 
         public string descripcion()
         {
-            return "Solucion_v1.8, A* Basico, FibbonacciHeap para abiertos. CostEuclidian";
+            return "Solucion_v1.8, A* Basico, FibbonacciHeap para abiertos. H(x)= DiagonalSorcut + Estadistico";
         }
 
         public ListaConexiones buscarConexiones(ListaCheckPoint listaCheckPoint, MapaDeCostos mapaDeCostos, List<ZonaProhibida> zonasProhibidas)

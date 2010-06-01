@@ -21,7 +21,7 @@ namespace SolucionAlumno
 
         public string descripcion()
         {
-            return "Solucion_v1.4, A* Basico, Con HashTable y Arbol Rojo-Negro para abiertos.";
+            return "Solucion_v1.4, A* Basico, Con Hibrido de HashTable y Arbol Rojo-Negro para abiertos.";
         }
 
         public ListaConexiones buscarConexiones(ListaCheckPoint listaCheckPoint, MapaDeCostos mapaDeCostos, List<ZonaProhibida> zonasProhibidas)

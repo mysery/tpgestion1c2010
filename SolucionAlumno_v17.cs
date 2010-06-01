@@ -21,7 +21,7 @@ namespace SolucionAlumno
 
         public string descripcion()
         {
-            return "Solucion_v1.7, A* Basico, FibbonacciHeap para abiertos. CostWithCrossProduct";
+            return "Solucion_v1.7, A* Basico, FibbonacciHeap para abiertos. H(x)= TieBreakCrossProduct";
         }
 
         public ListaConexiones buscarConexiones(ListaCheckPoint listaCheckPoint, MapaDeCostos mapaDeCostos, List<ZonaProhibida> zonasProhibidas)

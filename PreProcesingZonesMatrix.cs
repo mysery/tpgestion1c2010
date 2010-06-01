@@ -16,7 +16,7 @@ namespace SolucionAlumno
            this.processZones(zonasProhibidas);
         }
 
-        public virtual void processZones(List<ZonaProhibida> zonasProhibidas)
+        public virtual IPreProcesingZones processZones(List<ZonaProhibida> zonasProhibidas)
         {
             foreach (ZonaProhibida zonaProhibida in zonasProhibidas)
             {
@@ -26,6 +26,7 @@ namespace SolucionAlumno
                     for (int j = zonaProhibida.Y; j <= (zonaProhibida.Y + zonaProhibida.Height); j++)
                         matrixZonas[i, j] = zonaProhibida;
             }
+            return this;
         }
 
         public virtual ZonaProhibida this[int x, int y]
