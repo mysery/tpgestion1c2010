@@ -16,7 +16,8 @@ namespace SolucionAlumno
             CostEuclidian,
             CostStadistic,
             CostSimpleTieBreak,
-            CostWithCrossProduct
+            CostWithCrossProduct,
+            CostZero
         }
 
 		private CostCalculatorStrategy internalCostCalculator;
@@ -34,6 +35,7 @@ namespace SolucionAlumno
                 case CalculationType.CostStadistic: return new CostStadistic();
                 case CalculationType.CostSimpleTieBreak: return new CostSimpleTieBreak();
                 case CalculationType.CostWithCrossProduct: return new CostWithCrossProduct();
+                case CalculationType.CostZero: return new CostZero();
                 default: throw new ArgumentException("Unexpected CalculationType");
             }
         }

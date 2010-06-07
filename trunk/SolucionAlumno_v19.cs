@@ -21,23 +21,13 @@ namespace SolucionAlumno
 
         public string descripcion()
         {
-            return "Solucion_v1.9, A* Basico, FibbonacciHeap para abiertos. H(x)= DiagonalSorcut + TieBreaks + Prueba y error. +Optimisacion.";
+            return "Solucion_v1.9, A* Basico, FibbonacciHeap para abiertos. H(x)= 0";
         }
 
         public ListaConexiones buscarConexiones(ListaCheckPoint listaCheckPoint, MapaDeCostos mapaDeCostos, List<ZonaProhibida> zonasProhibidas)
         {
-            return cfa.ConnectionFind(ast,
-                                      listaCheckPoint, 
-                                      mapaDeCostos, 
-                                      pph.processZones(zonasProhibidas),
-                                      cc);
+            return new ConnectionFindAbstraction().ConnectionFind(new AStar(new FibonacciHeap<Node>(), new Hashtable()), listaCheckPoint, mapaDeCostos, new PreProcesingZonesHash(mapaDeCostos.getDimensiones().Width, mapaDeCostos.getDimensiones().Height, zonasProhibidas), new CostCalculator(CostCalculator.CalculationType.CostZero));
         }
-        //Se definen estaticas las siguentes para no realizar instancia en cada ejecucion del algoritmo.
-        private static ConnectionFindAbstraction cfa = new ConnectionFindAbstraction();
-        private static FibonacciHeap<Node> fb = new FibonacciHeap<Node>();
-        private static Hashtable ht = new Hashtable();
-        private static PreProcesingZonesHash pph = new PreProcesingZonesHash();
-        private static AStar ast = new AStar(fb, ht);
-        private static CostCalculator cc = new CostCalculator(CostCalculator.CalculationType.CostBestFit);
+
     }
 }
