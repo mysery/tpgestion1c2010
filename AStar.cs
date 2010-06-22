@@ -61,8 +61,7 @@ namespace SolucionAlumno
                         Node nodo = openStruct.FindInStruct(adjacent);                        
                         if (adjacent.GValue < nodo.GValue)
                         {
-                            adjacent.Parent = actualNode;
-                            //nodo.calculateCost(actualNode, goalNode.Point, mapaDeCostos);
+                            adjacent.Parent = actualNode;                            
                             //NO HACE FALTA ORDENAR... SE SAKA Y SE PONE ORDENADO
                             if (!openStruct.Remove(nodo))
                             {
